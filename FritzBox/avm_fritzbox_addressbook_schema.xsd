@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <!-- #TODO
+        Wenn ein "@" in der Telefonnummer ist,
+            muß einen vanitynummer,
+            einen Kurzwahl
+            und das HauptrufnummernFlag gesetzt sein.
+    -->
+    <xs:element name="phonebooks">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="phonebook"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="phonebook">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="contact"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Gibt den Namen des Telefonbuchs an.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="owner" type="xs:positiveInteger"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="contact">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="category">
+                    <xs:annotation>
+                        <xs:documentation>Gibt an, ob dieses eine wichtige Person ist. 0...nicht
+                            wichtig (oder gar nicht vorhanden) 1...ist wichtig und es klingelt auch
+                            bei Anrufsperre</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="person"/>
+                <xs:element ref="telephony"/>
+                <xs:element ref="services">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de">Sinn unbekannt </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="setup">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de">Sinn unbekannt.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="category" nillable="true">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:minInclusive value="0"/>
+                <xs:maxInclusive value="1"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="person">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="realName"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="realName" type="xs:string"/>
+    <xs:element name="telephony">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="3" ref="number"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="number" type="T_PhoneNumber"> </xs:element>
+    <xs:element name="services">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="setup">
+        <xs:complexType/>
+    </xs:element>
+    <xs:simpleType name="T_PhoneNumerType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="work"/>
+            <xs:enumeration value="home"/>
+            <xs:enumeration value="mobile"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="T_PhoneNumber">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="prio" use="required">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="0"/>
+                            <xs:maxInclusive value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="type" type="T_PhoneNumerType" use="required"/>
+                <xs:attribute name="quickdial" type="xs:nonNegativeInteger"/>
+                <xs:attribute name="vanity" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>
