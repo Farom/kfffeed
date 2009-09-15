@@ -1,3 +1,4 @@
+#include <QFile>
 #include "fritzboxphonebook.h"
 
 void FritzBoxPhoneBook::attach(const KABC::Addressee::List contactList)
@@ -16,8 +17,15 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contactList)
 
 }
 
-
-void FritzBoxPhoneBook::exportFile(const QString fileName)
+void FritzBoxPhoneBook::attach(const QString fileName)
 {
 
+
+}
+
+void FritzBoxPhoneBook::exportFile(const QString fileName) const
+{
+    // first we have to generate a new DOM tree
+    QDomDocument doc( fileName );
+    QFile file("mydocument.xml");
 }

@@ -1,9 +1,13 @@
+#include <kdebug.h>
+#include <QRegExp>
+
 #include "fritzboxphonenumber.h"
+
 
 bool FritzBoxPhoneNumber::valid() const
 {
     // vanity and quickdial contains only of numbers
-    if ( isNumberOr( m_Vanity ) ) {
+    if ( isNumberOrNull( m_Vanity ) ) {
         kDebug() << " Vanity (" << m_Vanity
                  << ") Number of " << m_PhoneNumber
                  <<" is not a Number ";
@@ -27,13 +31,13 @@ bool FritzBoxPhoneNumber::valid() const
     return true;
 }
 
-bool FritzBoxPhoneNumber::isNumber(QString string)
+bool FritzBoxPhoneNumber::isNumber(const QString string) const
 {
-    const static QRegExp rx("^\\d+$");
-    return string.contains(rx);
+    const static QRegExp rx("^\\+?[\\d\\s]+$");
+    return rx.exactMatch(string);
 }
 
-bool FritzBoxPhoneNumber::isNumberOrNull(QString string)
+bool FritzBoxPhoneNumber::isNumberOrNull(const QString string) const
 {
     const static QRegExp rx("^\\d*$");
     return string.contains(rx);

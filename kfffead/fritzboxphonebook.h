@@ -13,7 +13,8 @@
 class FritzBoxPhoneBook {
 public:
     void attach(const KABC::Addressee::List contactList);
-    void exportFile(const QString fileName);
+    void attach(const QString fileName);
+    void exportFile(const QString fileName) const;
 private:
     /** Attribute name - This is the name of your phonebook */
     QString m_Name;
