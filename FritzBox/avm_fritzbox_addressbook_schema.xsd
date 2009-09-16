@@ -9,7 +9,11 @@
     <xs:element name="phonebooks">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="phonebook"/>
+                <xs:element ref="phonebook">
+                    <xs:annotation>
+                        <xs:documentation>Mehr als 1 phonebook werden ignoriert.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

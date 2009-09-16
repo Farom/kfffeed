@@ -1,8 +1,8 @@
 #ifndef FRITZBOXPHONEBOOK_H
 #define FRITZBOXPHONEBOOK_H
 
-#include <QString>
-#include <QDomDocument>
+#include <QtCore>
+#include <QtXml>
 
 #include <kabc/stdaddressbook.h>
 #include "fritzboxphonebookcontact.h"

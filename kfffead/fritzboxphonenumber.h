@@ -1,8 +1,9 @@
 #ifndef FRITZBOXPHONENUMBER_H
 #define FRITZBOXPHONENUMBER_H
 
-#include <QList>
-#include <QString>
+#include <QtCore>
+#include <QtXml>
+#include <kdebug.h>
 
 /** @class FritzBoxPhoneNumber
         This class describes one PhoneNumber of the FritzBoxPhonebook
@@ -10,8 +11,10 @@
 */
 class FritzBoxPhoneNumber {
     public:
-        bool valid() const;
+        bool isValid() const;
         // Wenn m_Phonenumber contains "@", quickdial and vanity required
+        QDomElement generateDomElement(QDomDocument & doc) const;
+
     private:
         bool isNumber(const QString string) const;
 
@@ -35,7 +38,13 @@ class FritzBoxPhoneNumber {
 */
 class FritzBoxPhoneNumberList {
     public:
-        bool valid() const;
+        bool isValid() const;
+        int size() const { return m_NumberList.size(); }
+        bool isEmpty() const { return m_NumberList.isEmpty(); }
+        const FritzBoxPhoneNumber & operator[](const int i) const {
+            if ( (i >= 0) && (i < size()) ) return m_NumberList.at(i);
+            kDebug() << "Out of index";
+        }
         //listsize max 3
         // one of home work and mobile
         // only one number can have the "prio"rity Flag

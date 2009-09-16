@@ -1,8 +1,8 @@
 #ifndef FRITZBOXPHONEBOOKCONTACT_H
 #define FRITZBOXPHONEBOOKCONTACT_H
 
-#include <QList>
-#include <QString>
+#include <QtCore>
+#include <QtXml>
 
 #include "fritzboxphonenumber.h"
 
@@ -13,6 +13,7 @@ class FritzBoxPhoneBookContact {
 public:
     QString person() const { return m_Person; }
     void setPerson(const QString name) { m_Person = name; }
+    QDomElement generateDomElement( QDomDocument & doc) const;
 
 private:
     /** XML-Element <category/> */
@@ -28,8 +29,9 @@ private:
 
 /** @class FritzBoxPhoneBookContactList
     This class */
-class FritzBoxPhoneBookContactList : QList<FritzBoxPhoneBookContact> {
+class FritzBoxPhoneBookContactList : public QList<FritzBoxPhoneBookContact> {
 public:
+    bool isValid() const;
 private:
 
 };
