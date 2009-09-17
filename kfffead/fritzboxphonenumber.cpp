@@ -43,7 +43,7 @@ bool FritzBoxPhoneNumber::isNumberOrNull(const QString string) const
     return string.contains(rx);
 }
 
-QDomElement FritzBoxPhoneNumber::generateDomElement(QDomDocument & doc) const {
+QDomElement FritzBoxPhoneNumber::generateDomElement( QDomDocument & doc ) const {
     QDomElement foo;
     if ( ! isValid() ) return foo;
     QDomElement numberE = doc.createElement("number");
@@ -60,4 +60,23 @@ QDomElement FritzBoxPhoneNumber::generateDomElement(QDomDocument & doc) const {
 
 bool FritzBoxPhoneNumberList::isValid() const {
     return true;
+}
+
+
+QList<QDomNode>
+FritzBoxPhoneNumberList::generateDomElements(
+        QDomDocument &doc)
+const {
+    QList<QDomNode> nodeList;
+    if ( ! this->isValid() ) return nodeList;
+    for ( QList<FritzBoxPhoneNumber>::const_iterator numberI  = begin();
+                                                     numberI != end();
+                                                     numberI++) {
+
+        QDomElement numberE = numberI->generateDomElement( doc );
+        nodeList.append( numberE );
+
+    }
+
+    return nodeList;
 }

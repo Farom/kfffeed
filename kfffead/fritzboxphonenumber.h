@@ -36,21 +36,22 @@ class FritzBoxPhoneNumber {
         This class describes a List of FritzBoxPhoneNumbers of
         a FritzBoxPhoneBookContact is everything in the XML-Element <telefony/>
 */
-class FritzBoxPhoneNumberList {
+class FritzBoxPhoneNumberList : private QList<FritzBoxPhoneNumber>{
     public:
         bool isValid() const;
-        int size() const { return m_NumberList.size(); }
-        bool isEmpty() const { return m_NumberList.isEmpty(); }
-        const FritzBoxPhoneNumber & operator[](const int i) const {
-            if ( (i >= 0) && (i < size()) ) return m_NumberList.at(i);
-            kDebug() << "Out of index";
-        }
         //listsize max 3
         // one of home work and mobile
         // only one number can have the "prio"rity Flag
         // all Numbers are valid
+        int size() const { return this->size(); }
+        bool isEmpty() const { return this->isEmpty(); }
+        const FritzBoxPhoneNumber & operator[](const int i) const {
+            return this->operator[](i);
+        }
+        //QDomElement generateDomElements(QDomDocument & doc) const;
+        QList<QDomNode> generateDomElements(QDomDocument &doc) const;
+
     private:
-        QList<FritzBoxPhoneNumber> m_NumberList;
 };
 
 

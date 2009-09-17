@@ -25,10 +25,15 @@ const  {
     QDomElement telephonyE = doc.createElement("telephony");
     contactE.appendChild(telephonyE);
 
-    for ( int i = 0; i < m_FonNumberList.size(); i++) {
-        QDomElement numberE = m_FonNumberList[i].generateDomElement( doc );
-        telephonyE.appendChild( numberE );
+    QList<QDomNode> nodeList = m_FonNumberList.generateDomElements( doc );
+    for (QList<QDomNode>::const_iterator nodeI = nodeList.begin();
+                                         nodeI != nodeList.end(); nodeI++) {
+        telephonyE.appendChild( *nodeI );
     }
+//    for ( int i = 0; i < m_FonNumberList.size(); i++) {
+//        QDomElement numberE = m_FonNumberList[i].generateDomElement( doc );
+//        telephonyE.appendChild( numberE );
+//    }
     // No Idea what that things are for.
     // On my FB 7270 i found them always empty
     QDomElement servicesE = doc.createElement("services");
