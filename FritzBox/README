@@ -1,0 +1,2 @@
+this is a selfcreated XML Schemafile for the Phonebook Export and Import Files of the FritzBox7270.
+At the moment i use qt 4.5 so there is no schema support in qt yet, but it will be in 4.6
