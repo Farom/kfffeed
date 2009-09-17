@@ -73,6 +73,16 @@ bool FritzBoxPhoneBookContact::addNumber(const FritzBoxPhoneNumber & number ) {
     return true;
 }
 
+void FritzBoxPhoneBookContact::print() const {
+    kDebug() << "           Kontakt: "
+             << m_Category << " "
+             << m_Person
+             << " with "
+             << m_FonNumberList.size()
+             << " Numbers";
+    m_FonNumberList.print();
+}
+
 
 bool FritzBoxPhoneBookContactList::isValid() const {
     bool valid = true;
@@ -85,6 +95,28 @@ bool FritzBoxPhoneBookContactList::isValid() const {
         /** @TODO for every number check all other numbers or make a list or something */
     }
     return true;
+}
+
+void FritzBoxPhoneBookContactList::print() const {
+    kDebug() << "       There are "
+             << size()
+             << " Contacts in this List";
+    for (const_iterator contactI=begin(); contactI != end(); contactI++) {
+        contactI->print();
+    }
+}
+
+void FritzBoxPhoneBookContactList::deleteContactsWithoutNumbers() {
+
+    for (iterator contactI = begin(); contactI != end(); ) {
+        if ( ! contactI->hasNumbers() ) {
+            contactI = erase(contactI);
+            continue;
+        }
+        contactI++;
+    }
+
+
 }
 
 

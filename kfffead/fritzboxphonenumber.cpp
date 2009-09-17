@@ -73,6 +73,16 @@ QDomElement FritzBoxPhoneNumber::generateDomElement( QDomDocument & doc ) const 
     return numberE;
 }
 
+void FritzBoxPhoneNumber::print() const {
+    kDebug() << "               "
+             << m_Type << " "
+             << m_Priority << " "
+             << m_QuickDial << "\t"
+             << m_Vanity << "\t"
+             << m_PhoneNumber;
+
+}
+
 bool FritzBoxPhoneNumberList::isValid() const {
     return true;
 }
@@ -103,4 +113,11 @@ bool FritzBoxPhoneNumberList::isThereAlreadyANumberOfType(
         if (numberI->type() == type) recurrence = true;
     }
     return recurrence;
+}
+
+void FritzBoxPhoneNumberList::print() const {
+    for (const_iterator numberI = begin(); numberI != end(); numberI++) {
+        numberI->print();
+    }
+
 }

@@ -11,6 +11,7 @@
     XML-Element <phonebook/>
 */
 class FritzBoxPhoneBook {
+//friend KDebug & operator<< (KDebug &, const FritzBoxPhoneBook &);
 public:
     FritzBoxPhoneBook(const QString & name = QString(),
                   const QString & owner = QString() );
@@ -27,6 +28,10 @@ public:
     void attach(const KABC::Addressee::List contactList);
     void attach(const QString fileName);
     void exportFile(const QString fileName) const;
+    void deleteContactsWithoutNumbers() {
+        m_Contacts.deleteContactsWithoutNumbers(); }
+
+    void print() const;
 private:
     /** Attribute name - This is the name of your phonebook */
     QString m_Name;
@@ -37,5 +42,7 @@ private:
     FritzBoxPhoneBookContactList m_Contacts;
 
 };
+
+//KDebug & operator<< (KDebug &, const FritzBoxPhoneBook &);
 
 #endif // FRITZBOXPHONEBOOK_H

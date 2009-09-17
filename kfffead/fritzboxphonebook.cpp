@@ -23,12 +23,12 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
         // 2 or more entrys of the same name eg "Björn Lässig (2)"
         int count = 1; // counts the necessary doubled Names
 
-        FritzBoxPhoneBookContact fbContact(contactI->assembledName());
+        FritzBoxPhoneBookContact fbContact(contactI->assembledName().simplified());
 
         KABC::PhoneNumber::List phoneNumbers = contactI->phoneNumbers();
         KABC::PhoneNumber::List::const_iterator phoneNumber = phoneNumbers.begin();
         for (; phoneNumber != phoneNumbers.end(); phoneNumber++) {
-            FritzBoxPhoneNumber fbNumber(phoneNumber->number());
+            FritzBoxPhoneNumber fbNumber(phoneNumber->number().simplified());
             // @TODO find best numberType forthe label
             kDebug() << fbContact.person() <<  "    (Nummer): " << phoneNumber->number()
                      << " Type: " << phoneNumber->typeLabel();
@@ -36,8 +36,10 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
             if (! hasAdded) {
                 kDebug() << "Beim hinzufüge ist etwas schief gegangen";
                 m_Contacts.addContact(fbContact);
-                QString newName = contactI->assembledName() + " " + QString(count);
+                QString newName = contactI->assembledName().simplified() + " " + QString().number(count);
                 fbContact = FritzBoxPhoneBookContact(newName);
+                kDebug() << fbContact.person() <<  "    (Nummer): " << phoneNumber->number()
+                         << " Type: " << phoneNumber->typeLabel();
                 hasAdded = fbContact.addNumber(fbNumber);
                 if (! hasAdded)
                     kDebug() << "something really wicked happened";
@@ -59,6 +61,7 @@ void FritzBoxPhoneBook::exportFile(const QString fileName) const
     kDebug() << "Create XML exportfile for "
              << m_Contacts.size()
              << " Contacts";
+    void deleteContactsWithoutNumbers();
     /****************************************************/
     /************ initialize the xml-dom tree ***********/
     /****************************************************/
@@ -110,3 +113,21 @@ void FritzBoxPhoneBook::exportFile(const QString fileName) const
     file.close();
 
 }
+
+
+
+
+void FritzBoxPhoneBook::print() const {
+    kDebug() << "Printing Phonebook";
+    kDebug() << "   Name: " << m_Name << "   Owner: "<< m_Owner;
+    m_Contacts.print();
+
+}
+
+//KDebug & operator<< (KDebug & stream, const FritzBoxPhoneBook & book){
+//    stream << "Phonebook   : Owner "
+//           << book.m_Owner
+//           << "     Name: "
+//           << book.m_Name;
+//    return stream;
+//}

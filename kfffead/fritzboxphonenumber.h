@@ -43,6 +43,8 @@ public:
     bool isValid() const;
     // Wenn m_Phonenumber contains "@", quickdial and vanity required
     QDomElement generateDomElement(QDomDocument & doc) const;
+
+    void print() const;
 private:
    bool isNumber(const QString string) const;
 
@@ -85,6 +87,8 @@ class FritzBoxPhoneNumberList : private QList<FritzBoxPhoneNumber>{
         void addNumber(const FritzBoxPhoneNumber & number) {
             append(number);
         }
+
+        void print() const;
 
     private:
 };

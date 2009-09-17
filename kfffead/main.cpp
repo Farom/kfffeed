@@ -22,10 +22,10 @@ int main( int argc, char **argv )
 
     kDebug() << "Jetzt geht es los";
 
-    FritzBoxPhoneBook phoneBook;
+    FritzBoxPhoneBook phoneBook("Björns FritzFon","Björn");
     //phoneBook.attach("FRITZ.Box_Telefonbuch.xml");
     phoneBook.attach(contacts);
-    kDebug() << "Contacts geadded";
+    phoneBook.print();
     phoneBook.exportFile("KAddressbook-Fritz-Box-Addressbook.xml");
     kDebug() << "AusgabeDatei geschrieben";
 

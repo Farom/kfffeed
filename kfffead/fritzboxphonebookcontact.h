@@ -28,6 +28,8 @@ public:
     /// brief Method adds a PhonenumberObjekt to the contactlist
     /** return  gives, whether it was possible to add the number */
     bool addNumber(const FritzBoxPhoneNumber & number );
+    void print() const;
+    bool hasNumbers() const { return m_FonNumberList.size(); }
 
 private:
     /** XML-Element <category/> */
@@ -51,6 +53,8 @@ public:
         append(contact);
         //kDebug() << "Count of Contacts: " << size();
     }
+    void deleteContactsWithoutNumbers();
+    void print() const;
 private:
 
 };
