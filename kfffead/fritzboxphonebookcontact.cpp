@@ -6,7 +6,7 @@ FritzBoxPhoneBookContact::FritzBoxPhoneBookContact(
         m_Category(importance),
         m_Person(personName)
 {
-    kDebug() << "Contact created";
+    //kDebug() << "Contact created";
 };
 
 
@@ -14,8 +14,9 @@ QDomElement
 FritzBoxPhoneBookContact::generateDomElement(
         QDomDocument & doc)
 const  {
-    QDomElement foo;
-    if ( this->m_FonNumberList.isEmpty() ) return foo;
+    // @TODO Number-Type = Fax ... ignore Number.
+    // it is not useful having a FaxNumber on a Dect Fon.
+    if ( ! hasNumbers() ) return QDomElement();
     QDomElement contactE = doc.createElement("contact");
     QDomElement categoryE = doc.createElement("category");
     contactE.appendChild(categoryE);
@@ -60,8 +61,6 @@ bool FritzBoxPhoneBookContact::isValid() const {
 }
 
 bool FritzBoxPhoneBookContact::addNumber(const FritzBoxPhoneNumber & number ) {
-    kDebug() << "in";
-
     if ( m_FonNumberList.isThereAlreadyANumberOfType( number.type() ) ) {
         return false;
     }

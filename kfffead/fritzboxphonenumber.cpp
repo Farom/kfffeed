@@ -16,32 +16,32 @@ FritzBoxPhoneNumber::FritzBoxPhoneNumber(
         m_Vanity(vanity),
         m_PhoneNumber(number)
 {
-    kDebug() << "A PhoneNumber is created";
+    //kDebug() << "A PhoneNumber is created";
 }
 
 bool FritzBoxPhoneNumber::isValid() const
 {
     // vanity and quickdial contains only of numbers
-    if ( isNumberOrNull( m_Vanity ) ) {
-        kDebug() << " Vanity (" << m_Vanity
-                 << ") Number of " << m_PhoneNumber
-                 <<" is not a Number ";
-        return false;
-    }
-
-    if ( isNumber( m_QuickDial ) ) {
-        kDebug() << " QuickDial Number (" << m_QuickDial
-                 <<") of " << m_PhoneNumber
-                 <<" is not a Number ";
-        return false;
-    }
-
-    // Wenn m_Phonenumber contains "@", quickdial and vanity required
-    if ( m_PhoneNumber.contains("@") ) {
-        kDebug() << "Phonenumber with an @ (" << m_PhoneNumber
-                 << ") must have a quickdial and a vanitynumber";
-        return false;
-    }
+//    if ( isNumberOrNull( m_Vanity ) ) {
+//        kDebug() << " Vanity (" << m_Vanity
+//                 << ") Number of " << m_PhoneNumber
+//                 <<" is not a Number ";
+//        return false;
+//    }
+//
+//    if ( isNumber( m_QuickDial ) ) {
+//        kDebug() << " QuickDial Number (" << m_QuickDial
+//                 <<") of " << m_PhoneNumber
+//                 <<" is not a Number ";
+//        return false;
+//    }
+//
+//    // Wenn m_Phonenumber contains "@", quickdial and vanity required
+//    if ( m_PhoneNumber.contains("@") ) {
+//        kDebug() << "Phonenumber with an @ (" << m_PhoneNumber
+//                 << ") must have a quickdial and a vanitynumber";
+//        return false;
+//    }
 
     return true;
 }

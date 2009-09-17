@@ -74,7 +74,7 @@ class FritzBoxPhoneNumberList : private QList<FritzBoxPhoneNumber>{
         // only one number can have the "prio"rity Flag
         // all Numbers are valid
         int size() const { return this->length(); }
-        bool isEmpty() const { return this->isEmpty(); }
+        bool isEmpty() const { return size()==0; }
         const FritzBoxPhoneNumber & operator[](const int i) const {
             return this->operator[](i);
         }

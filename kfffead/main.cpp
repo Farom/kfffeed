@@ -25,7 +25,7 @@ int main( int argc, char **argv )
     FritzBoxPhoneBook phoneBook("Björns FritzFon","Björn");
     //phoneBook.attach("FRITZ.Box_Telefonbuch.xml");
     phoneBook.attach(contacts);
-    phoneBook.print();
+    //phoneBook.print();
     phoneBook.exportFile("KAddressbook-Fritz-Box-Addressbook.xml");
     kDebug() << "AusgabeDatei geschrieben";
 

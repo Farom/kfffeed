@@ -16,9 +16,9 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
 
     KABC::Addressee::List::const_iterator contactI = contacts.begin();
     for ( ; contactI != contacts.end(); contactI++) {
-        kDebug() << "Now are "
-             << m_Contacts.size()
-             << " Contacts in List ";
+//        kDebug() << "Now are "
+//             << m_Contacts.size()
+//             << " Contacts in List ";
         // If a Name has 3 work numbers or 5 Phones it is necessary to generate
         // 2 or more entrys of the same name eg "Björn Lässig (2)"
         int count = 1; // counts the necessary doubled Names
@@ -30,16 +30,15 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
         for (; phoneNumber != phoneNumbers.end(); phoneNumber++) {
             FritzBoxPhoneNumber fbNumber(phoneNumber->number().simplified());
             // @TODO find best numberType forthe label
-            kDebug() << fbContact.person() <<  "    (Nummer): " << phoneNumber->number()
-                     << " Type: " << phoneNumber->typeLabel();
+//            kDebug() << fbContact.person() <<  "    (Nummer): " << phoneNumber->number()
+//                     << " Type: " << phoneNumber->typeLabel();
             bool hasAdded = fbContact.addNumber(fbNumber);
             if (! hasAdded) {
-                kDebug() << "Beim hinzufüge ist etwas schief gegangen";
                 m_Contacts.addContact(fbContact);
                 QString newName = contactI->assembledName().simplified() + " " + QString().number(count);
                 fbContact = FritzBoxPhoneBookContact(newName);
-                kDebug() << fbContact.person() <<  "    (Nummer): " << phoneNumber->number()
-                         << " Type: " << phoneNumber->typeLabel();
+//                kDebug() << fbContact.person() <<  "    (Nummer): " << phoneNumber->number()
+//                         << " Type: " << phoneNumber->typeLabel();
                 hasAdded = fbContact.addNumber(fbNumber);
                 if (! hasAdded)
                     kDebug() << "something really wicked happened";
@@ -79,26 +78,24 @@ void FritzBoxPhoneBook::exportFile(const QString fileName) const
     /****************************************************/
     /************ Filling with content ******************/
     /****************************************************/
-
     QDomElement root=phBook.createElement("phonebooks");
     phBook.appendChild( root );
 
     /** this is the Basenode for all Contacts */
-    QDomElement phonebook = phBook.createElement("phonebook");
+    QDomElement phonebookE = phBook.createElement("phonebook");
     /** @TODO these ones are optional, if empty
         do not put it in the element */
     if ( ! this->m_Name.isEmpty() )
-        phonebook.setAttribute("name", this->m_Name);
+        phonebookE.setAttribute("name", this->m_Name);
     if ( ! this->m_Owner.isEmpty() )
-        phonebook.setAttribute("owner", this->m_Owner);
-    root.appendChild(phonebook);
+        phonebookE.setAttribute("owner", this->m_Owner);
+    root.appendChild(phonebookE);
 
     FritzBoxPhoneBookContactList::const_iterator contactI = m_Contacts.begin();
     for (; contactI != m_Contacts.end(); contactI++) {
-        QDomElement contactElement = contactI->generateDomElement( phBook );
-        phonebook.appendChild(contactElement);
+        QDomElement contactE = contactI->generateDomElement( phBook );
+        if ( ! contactE.isNull() ) phonebookE.appendChild(contactE);
     }
-
 
     /****************************************************/
     /************ Writing the dom tree to a file ********/

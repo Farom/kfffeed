@@ -29,7 +29,7 @@ public:
     /** return  gives, whether it was possible to add the number */
     bool addNumber(const FritzBoxPhoneNumber & number );
     void print() const;
-    bool hasNumbers() const { return m_FonNumberList.size(); }
+    bool hasNumbers() const { return ! m_FonNumberList.isEmpty(); }
 
 private:
     /** XML-Element <category/> */
