@@ -1,8 +1,14 @@
 #include "fritzboxphonebookcontact.h"
 
-//FritzBoxPhoneBookContact::FritzBoxPhoneBookContact()
-//{
-//}
+FritzBoxPhoneBookContact::FritzBoxPhoneBookContact(
+            const QString & personName,
+            const ImportanceType & importance):
+        m_Category(importance),
+        m_Person(personName)
+{
+    kDebug() << "Contact created";
+};
+
 
 QDomElement
 FritzBoxPhoneBookContact::generateDomElement(
@@ -43,7 +49,36 @@ const  {
     return contactE;
 }
 
+bool FritzBoxPhoneBookContact::isValid() const {
+    bool valid = true;
+    if ( m_Person.isEmpty() ) {
+        valid = false;
+        kDebug() << "No Personname is given for this object";
+    }
+    if ( ! m_FonNumberList.isValid() ) valid = false;
+    return valid;
+}
+
+bool FritzBoxPhoneBookContact::addNumber(const FritzBoxPhoneNumber & number ) {
+    kDebug() << "in";
+
+    if ( m_FonNumberList.isThereAlreadyANumberOfType( number.type() ) ) {
+        return false;
+    }
+    m_FonNumberList.size();
+    if ( m_FonNumberList.size() >= 3 ) {
+        return false;
+    }
+    m_FonNumberList.addNumber(number);
+    return true;
+}
+
+
 bool FritzBoxPhoneBookContactList::isValid() const {
+    bool valid = true;
+    for ( const_iterator contactI = begin(); contactI != end(); contactI++ ) {
+        if ( ! contactI->isValid() ) valid = false;
+    }
     // checking that the vanity and the quickdialNumber are eqal
     for ( const_iterator contactI = begin(); contactI != end(); contactI++ )
     {
@@ -51,4 +86,5 @@ bool FritzBoxPhoneBookContactList::isValid() const {
     }
     return true;
 }
+
 

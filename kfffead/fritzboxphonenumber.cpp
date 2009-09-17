@@ -3,6 +3,21 @@
 
 #include "fritzboxphonenumber.h"
 
+FritzBoxPhoneNumber::FritzBoxPhoneNumber(
+        const QString & number,
+        NumberTypeType type,
+        PriorityType prio,
+        const QString & quickdial,
+        const QString & vanity
+):
+        m_Type(type),
+        m_Priority(prio),
+        m_QuickDial(quickdial),
+        m_Vanity(vanity),
+        m_PhoneNumber(number)
+{
+    kDebug() << "A PhoneNumber is created";
+}
 
 bool FritzBoxPhoneNumber::isValid() const
 {
@@ -65,8 +80,7 @@ bool FritzBoxPhoneNumberList::isValid() const {
 
 QList<QDomNode>
 FritzBoxPhoneNumberList::generateDomElements(
-        QDomDocument &doc)
-const {
+        QDomDocument &doc) const {
     QList<QDomNode> nodeList;
     if ( ! this->isValid() ) return nodeList;
     for ( QList<FritzBoxPhoneNumber>::const_iterator numberI  = begin();
@@ -79,4 +93,14 @@ const {
     }
 
     return nodeList;
+}
+
+bool FritzBoxPhoneNumberList::isThereAlreadyANumberOfType(
+        const FritzBoxPhoneNumber::NumberTypeType type) const {
+
+    bool recurrence = false;
+    for (const_iterator numberI = begin(); numberI != end(); numberI++) {
+        if (numberI->type() == type) recurrence = true;
+    }
+    return recurrence;
 }

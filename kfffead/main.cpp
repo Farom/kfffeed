@@ -20,12 +20,14 @@ int main( int argc, char **argv )
 
     const KABC::Addressee::List contacts = addressBook->allAddressees();
 
-    FritzBoxPhoneBook phoneBook;
-    phoneBook.attach("FRITZ.Box_Telefonbuch.xml");
-    phoneBook.attach(contacts);
-    phoneBook.exportFile("KAddressbook-Fritz-Box-Addressbook.xml");
+    kDebug() << "Jetzt geht es los";
 
-    kDebug() << "Ende des Exports";
+    FritzBoxPhoneBook phoneBook;
+    //phoneBook.attach("FRITZ.Box_Telefonbuch.xml");
+    phoneBook.attach(contacts);
+    kDebug() << "Contacts geadded";
+    phoneBook.exportFile("KAddressbook-Fritz-Box-Addressbook.xml");
+    kDebug() << "AusgabeDatei geschrieben";
 
     return 0;
 }

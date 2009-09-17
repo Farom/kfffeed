@@ -11,13 +11,27 @@
   */
 class FritzBoxPhoneBookContact {
 public:
+    enum ImportanceType {
+        UNIMPORTANT=0,
+        IMPORTANT=1
+    };
+
+    FritzBoxPhoneBookContact(
+            const QString & personName = QString(),
+            const ImportanceType & importance = UNIMPORTANT);
+
     QString person() const { return m_Person; }
     void setPerson(const QString name) { m_Person = name; }
+
+    bool isValid() const;
     QDomElement generateDomElement( QDomDocument & doc) const;
+    /// brief Method adds a PhonenumberObjekt to the contactlist
+    /** return  gives, whether it was possible to add the number */
+    bool addNumber(const FritzBoxPhoneNumber & number );
 
 private:
     /** XML-Element <category/> */
-    enum {unimportant=0, important=1} m_Category;
+    ImportanceType m_Category;
     /** m_Person is the String that appears in your Phonebook on the DectPhone
         XML-Element <person/>
     */
@@ -32,6 +46,11 @@ private:
 class FritzBoxPhoneBookContactList : public QList<FritzBoxPhoneBookContact> {
 public:
     bool isValid() const;
+    void addContact(const FritzBoxPhoneBookContact & contact) {
+        //kDebug() << "Contact will be added";
+        append(contact);
+        //kDebug() << "Count of Contacts: " << size();
+    }
 private:
 
 };

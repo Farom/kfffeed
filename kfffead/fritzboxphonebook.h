@@ -12,6 +12,18 @@
 */
 class FritzBoxPhoneBook {
 public:
+    FritzBoxPhoneBook(const QString & name = QString(),
+                  const QString & owner = QString() );
+
+
+    QString name() const { return m_Name; }
+    void setName(const QString & name) { m_Name = name;}
+    QString owner() const { return m_Owner; }
+    void setOwner(const QString & owner) { m_Owner = owner; }
+
+    void addContact(const FritzBoxPhoneBookContact & contact) {
+        m_Contacts.addContact(contact);}
+
     void attach(const KABC::Addressee::List contactList);
     void attach(const QString fileName);
     void exportFile(const QString fileName) const;

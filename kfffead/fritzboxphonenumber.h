@@ -10,26 +10,54 @@
         is everything in the XML-Element <number/>
 */
 class FritzBoxPhoneNumber {
-    public:
-        bool isValid() const;
-        // Wenn m_Phonenumber contains "@", quickdial and vanity required
-        QDomElement generateDomElement(QDomDocument & doc) const;
+public:
+    enum PriorityType {
+        mainCallingNumber = 0,
+        nonMainCallingNumber = 1 // this is the one which will be dialed
+                                 // if clicked on the name on the phone
+    };
+    enum NumberTypeType {
+        home=0,
+        work=1,
+        mobile=2
+    };
 
-    private:
-        bool isNumber(const QString string) const;
+    FritzBoxPhoneNumber(
+        const QString & number = QString(),
+        NumberTypeType type = FritzBoxPhoneNumber::home,
+        PriorityType prio = FritzBoxPhoneNumber::nonMainCallingNumber,
+        const QString & quickdial = QString(),
+        const QString & vanity = QString());
 
-        bool isNumberOrNull(const QString string) const;
+    QString number() const { return m_PhoneNumber; }
+    void setNumber(const QString & number) { m_PhoneNumber = number; }
+    QString vanity() const { return m_Vanity; }
+    void setVanity(const QString & vanity) { m_Vanity = vanity; }
+    QString quickDial() const { return m_QuickDial; }
+    void setQickDial(const QString & qickDial) { m_QuickDial= qickDial; }
+    PriorityType priority() const { return m_Priority; }
+    void setPriority( const PriorityType & prio ) { m_Priority = prio; }
+    NumberTypeType type() const { return m_Type; }
+    void setType(const NumberTypeType & type) { m_Type = type; }
 
-        /** Attribute type */
-        enum {home=0, work=1, mobile=2} m_Type;
-        /** Attribute prio */
-        enum {mainCallingNumber = 0, nonMainCallingNumber = 1} m_Priority;
-        /** Attribute quickdial */
-        QString m_QuickDial;
-        /** Attribute vanity */
-        QString m_Vanity;
+    bool isValid() const;
+    // Wenn m_Phonenumber contains "@", quickdial and vanity required
+    QDomElement generateDomElement(QDomDocument & doc) const;
+private:
+   bool isNumber(const QString string) const;
 
-        QString m_PhoneNumber;
+   bool isNumberOrNull(const QString string) const;
+
+   /** Attribute type */
+   NumberTypeType m_Type;
+   /** Attribute prio */
+   PriorityType m_Priority;
+   /** Attribute quickdial */
+   QString m_QuickDial;
+   /** Attribute vanity */
+   QString m_Vanity;
+
+   QString m_PhoneNumber;
 };
 
 /** @class FritzBoxPhoneNumberList
@@ -43,13 +71,20 @@ class FritzBoxPhoneNumberList : private QList<FritzBoxPhoneNumber>{
         // one of home work and mobile
         // only one number can have the "prio"rity Flag
         // all Numbers are valid
-        int size() const { return this->size(); }
+        int size() const { return this->length(); }
         bool isEmpty() const { return this->isEmpty(); }
         const FritzBoxPhoneNumber & operator[](const int i) const {
             return this->operator[](i);
         }
         //QDomElement generateDomElements(QDomDocument & doc) const;
         QList<QDomNode> generateDomElements(QDomDocument &doc) const;
+
+        bool isThereAlreadyANumberOfType(
+            const FritzBoxPhoneNumber::NumberTypeType type) const;
+
+        void addNumber(const FritzBoxPhoneNumber & number) {
+            append(number);
+        }
 
     private:
 };
