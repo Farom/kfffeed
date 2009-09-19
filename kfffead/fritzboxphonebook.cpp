@@ -36,6 +36,7 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
             if (! hasAdded) {
                 m_Contacts.addContact(fbContact);
                 QString newName = contactI->assembledName().simplified() + " " + QString().number(count);
+                count++;
                 fbContact = FritzBoxPhoneBookContact(newName);
 //                kDebug() << fbContact.person() <<  "    (Nummer): " << phoneNumber->number()
 //                         << " Type: " << phoneNumber->typeLabel();

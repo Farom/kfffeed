@@ -23,7 +23,8 @@ int main( int argc, char **argv )
 
     kDebug() << "Jetzt geht es los";
 
-    FritzBoxPhoneBook phoneBook("Björns FritzFon","1");
+
+    FritzBoxPhoneBook phoneBook(QString("Björns FritzFon"),"1");
     //phoneBook.attach("FRITZ.Box_Telefonbuch.xml");
     phoneBook.attach(contacts);
     //phoneBook.print();
