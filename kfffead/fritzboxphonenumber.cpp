@@ -63,7 +63,7 @@ QDomElement FritzBoxPhoneNumber::generateDomElement( QDomDocument & doc ) const 
     if ( ! isValid() ) return foo;
     QDomElement numberE = doc.createElement("number");
     numberE.setAttribute("prio", this->m_Priority);
-    numberE.setAttribute("type", this->m_Type);
+    numberE.setAttribute("type", this->typeString());
     if ( ! m_Vanity.isEmpty() )
         numberE.setAttribute("vanity", m_Vanity);
     if ( ! m_QuickDial.isEmpty() )
@@ -71,6 +71,13 @@ QDomElement FritzBoxPhoneNumber::generateDomElement( QDomDocument & doc ) const 
     QDomText numberText = doc.createTextNode( m_PhoneNumber );
     numberE.appendChild( numberText );
     return numberE;
+}
+
+QString FritzBoxPhoneNumber::typeString() const {
+    if ( m_Type == home ) return QString("home");
+    if ( m_Type == work ) return QString("work");
+    if ( m_Type == mobile ) return QString("mobile");
+    return QString("unknown");
 }
 
 void FritzBoxPhoneNumber::print() const {

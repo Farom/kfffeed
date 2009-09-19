@@ -22,10 +22,10 @@ const  {
     contactE.appendChild(categoryE);
     QString temp; temp.setNum(m_Category);
     QDomText categoryText = doc.createTextNode( temp );
-    contactE.appendChild( categoryText );
+    categoryE.appendChild( categoryText );
     QDomElement personE = doc.createElement("person");
     contactE.appendChild(personE);
-    QDomElement realNameE = doc.createElement("person");
+    QDomElement realNameE = doc.createElement("realName");
     personE.appendChild( realNameE );
     QDomText    realNameText = doc.createTextNode( this->m_Person );
     realNameE.appendChild(realNameText);
@@ -44,9 +44,9 @@ const  {
     // No Idea what that things are for.
     // On my FB 7270 i found them always empty
     QDomElement servicesE = doc.createElement("services");
-    doc.appendChild(servicesE);
+    contactE.appendChild(servicesE);
     QDomElement setupE = doc.createElement("setup");
-    doc.appendChild(setupE);
+    contactE.appendChild(setupE);
     return contactE;
 }
 

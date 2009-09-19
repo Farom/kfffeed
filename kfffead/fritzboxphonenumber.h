@@ -44,6 +44,7 @@ public:
     // Wenn m_Phonenumber contains "@", quickdial and vanity required
     QDomElement generateDomElement(QDomDocument & doc) const;
 
+    QString typeString() const;
     void print() const;
 private:
    bool isNumber(const QString string) const;
