@@ -74,9 +74,9 @@ QDomElement FritzBoxPhoneNumber::generateDomElement( QDomDocument & doc ) const 
 }
 
 QString FritzBoxPhoneNumber::typeString() const {
-    if ( m_Type == home ) return QString("home");
-    if ( m_Type == work ) return QString("work");
-    if ( m_Type == mobile ) return QString("mobile");
+    if ( m_Type == Home ) return QString("home");
+    if ( m_Type == Work ) return QString("work");
+    if ( m_Type == Mobile ) return QString("mobile");
     return QString("unknown");
 }
 

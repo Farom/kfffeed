@@ -23,23 +23,27 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
         // 2 or more entrys of the same name eg "Björn Lässig (2)"
         int count = 1; // counts the necessary doubled Names
 
-        FritzBoxPhoneBookContact fbContact(contactI->assembledName().simplified());
+        FritzBoxPhoneBookContact fbContact(contactI->formattedName().simplified());
 
         KABC::PhoneNumber::List phoneNumbers = contactI->phoneNumbers();
         KABC::PhoneNumber::List::const_iterator phoneNumber = phoneNumbers.begin();
         for (; phoneNumber != phoneNumbers.end(); phoneNumber++) {
             FritzBoxPhoneNumber fbNumber(phoneNumber->number().simplified());
+            if ( phoneNumber->type() & KABC::PhoneNumber::Cell )
+                fbNumber.setType(FritzBoxPhoneNumber::Mobile);
+            if ( phoneNumber->type() & KABC::PhoneNumber::Home )
+                fbNumber.setType(FritzBoxPhoneNumber::Home);
+            if ( phoneNumber->type() & KABC::PhoneNumber::Work )
+                fbNumber.setType(FritzBoxPhoneNumber::Work);
+            // yes there is a bug, a number can have more than one Flag
+
             // @TODO find best numberType forthe label
-//            kDebug() << fbContact.person() <<  "    (Nummer): " << phoneNumber->number()
-//                     << " Type: " << phoneNumber->typeLabel();
             bool hasAdded = fbContact.addNumber(fbNumber);
             if (! hasAdded) {
                 m_Contacts.addContact(fbContact);
-                QString newName = contactI->assembledName().simplified() + " " + QString().number(count);
+                QString newName = contactI->formattedName().simplified() + " " + QString().number(count);
                 count++;
                 fbContact = FritzBoxPhoneBookContact(newName);
-//                kDebug() << fbContact.person() <<  "    (Nummer): " << phoneNumber->number()
-//                         << " Type: " << phoneNumber->typeLabel();
                 hasAdded = fbContact.addNumber(fbNumber);
                 if (! hasAdded)
                     kDebug() << "something really wicked happened";

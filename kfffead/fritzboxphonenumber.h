@@ -17,14 +17,14 @@ public:
                                  // if clicked on the name on the phone
     };
     enum NumberTypeType {
-        home=0,
-        work=1,
-        mobile=2
+        Home=0,
+        Work=1,
+        Mobile=2
     };
 
     FritzBoxPhoneNumber(
         const QString & number = QString(),
-        NumberTypeType type = FritzBoxPhoneNumber::home,
+        NumberTypeType type = FritzBoxPhoneNumber::Home,
         PriorityType prio = FritzBoxPhoneNumber::nonMainCallingNumber,
         const QString & quickdial = QString(),
         const QString & vanity = QString());
