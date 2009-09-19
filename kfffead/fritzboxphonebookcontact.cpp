@@ -4,7 +4,7 @@ FritzBoxPhoneBookContact::FritzBoxPhoneBookContact(
             const QString & personName,
             const ImportanceType & importance):
         m_Category(importance),
-        m_Person(personName)
+        m_PersonRealName(personName)
 {
     //kDebug() << "Contact created";
 };
@@ -27,7 +27,7 @@ const  {
     contactE.appendChild(personE);
     QDomElement realNameE = doc.createElement("realName");
     personE.appendChild( realNameE );
-    QDomText    realNameText = doc.createTextNode( this->m_Person );
+    QDomText    realNameText = doc.createTextNode( this->m_PersonRealName );
     realNameE.appendChild(realNameText);
     QDomElement telephonyE = doc.createElement("telephony");
     contactE.appendChild(telephonyE);
@@ -52,7 +52,7 @@ const  {
 
 bool FritzBoxPhoneBookContact::isValid() const {
     bool valid = true;
-    if ( m_Person.isEmpty() ) {
+    if ( m_PersonRealName.isEmpty() ) {
         valid = false;
         kDebug() << "No Personname is given for this object";
     }
@@ -75,7 +75,7 @@ bool FritzBoxPhoneBookContact::addNumber(const FritzBoxPhoneNumber & number ) {
 void FritzBoxPhoneBookContact::print() const {
     kDebug() << "           Kontakt: "
              << m_Category << " "
-             << m_Person
+             << m_PersonRealName
              << " with "
              << m_FonNumberList.size()
              << " Numbers";

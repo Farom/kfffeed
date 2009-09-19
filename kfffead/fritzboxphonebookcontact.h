@@ -20,8 +20,8 @@ public:
             const QString & personName = QString(),
             const ImportanceType & importance = UNIMPORTANT);
 
-    QString person() const { return m_Person; }
-    void setPerson(const QString name) { m_Person = name; }
+    QString person() const { return m_PersonRealName; }
+    void setPerson(const QString name) { m_PersonRealName = name; }
 
     bool isValid() const;
     QDomElement generateDomElement( QDomDocument & doc) const;
@@ -34,10 +34,10 @@ public:
 private:
     /** XML-Element <category/> */
     ImportanceType m_Category;
-    /** m_Person is the String that appears in your Phonebook on the DectPhone
+    /** m_PersonRealName is the String that appears in your Phonebook on the DectPhone
         XML-Element <person/>
     */
-    QString m_Person;
+    QString m_PersonRealName;
 
     /** XML-Element <telephony/> */
     FritzBoxPhoneNumberList m_FonNumberList;
