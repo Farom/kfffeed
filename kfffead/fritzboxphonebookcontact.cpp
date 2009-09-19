@@ -29,6 +29,12 @@ const  {
     personE.appendChild( realNameE );
     QDomText    realNameText = doc.createTextNode( this->m_PersonRealName );
     realNameE.appendChild(realNameText);
+    if ( ! m_PersonImageUrl.isEmpty() ) {
+        QDomElement imageUrlE = doc.createElement("ImageUrl");
+        personE.appendChild( imageUrlE );
+        QDomText    imageUrlText = doc.createTextNode( this->m_PersonImageUrl );
+        imageUrlE.appendChild(imageUrlText);
+    }
     QDomElement telephonyE = doc.createElement("telephony");
     contactE.appendChild(telephonyE);
 
