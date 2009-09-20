@@ -12,8 +12,6 @@ m_Owner(owner)
 
 void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
 {
-    kDebug() << "Contact Liste wird gebaut";
-
     KABC::Addressee::List::const_iterator contactI = contacts.begin();
     for ( ; contactI != contacts.end(); contactI++) {
 //        kDebug() << "Now are "
@@ -29,6 +27,7 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
         KABC::PhoneNumber::List::const_iterator phoneNumber = phoneNumbers.begin();
         for (; phoneNumber != phoneNumbers.end(); phoneNumber++) {
             FritzBoxPhoneNumber fbNumber(phoneNumber->number().simplified());
+            if ( phoneNumber->type() & KABC::PhoneNumber::Fax ) continue;
             if ( phoneNumber->type() & KABC::PhoneNumber::Cell )
                 fbNumber.setType(FritzBoxPhoneNumber::Mobile);
             if ( phoneNumber->type() & KABC::PhoneNumber::Home )

@@ -5,31 +5,32 @@
 #include <kabc/stdaddressbook.h>
 
 #include "fritzboxphonebook.h"
-#include "../QtPhoneNumberString/qtphonenumberstring.h"
+#include "qphonenumberstring.h"
 
 int main( int argc, char **argv )
 {
-    KAboutData aboutData("testapp", "testapp", ki18n("testapp"), "0.1",
-                         ki18n("testapp"),
+    KAboutData aboutData("kfffeed", "kfffeed", ki18n("kfffeed"), "0.1",
+                         ki18n("Transfer Contactdate from kaddressbook to FritzBox 7270"),
                          KAboutData::License_GPL_V2);
+    aboutData.addAuthor(ki18n("Björn Lässig"));
 
     KCmdLineArgs::init( argc, argv, &aboutData );
     KApplication app( false );
 
+
+    // Here is a problem with the input-encoding if there are some "üöä" in it
+    FritzBoxPhoneBook phoneBook(QString("Phonebook"),"1");
+
+    // this will implemented later
+    //phoneBook.attach("FRITZ.Box_Telefonbuch.xml");
+
     // load the address book into memory
     KABC::AddressBook *addressBook = KABC::StdAddressBook::self( false );
-
     const KABC::Addressee::List contacts = addressBook->allAddressees();
-
-    kDebug() << "Jetzt geht es los";
-
-
-    FritzBoxPhoneBook phoneBook(QString("Björns FritzFon"),"1");
-    //phoneBook.attach("FRITZ.Box_Telefonbuch.xml");
     phoneBook.attach(contacts);
     //phoneBook.print();
     phoneBook.exportFile("KAddressbook-Fritz-Box-Addressbook.xml");
-    kDebug() << "AusgabeDatei geschrieben";
+    kDebug() << "outputfile written";
 
     // This is for testing of the new lib for phoneNumbers
     // i have to build a list of all numbers from my addressbook for checking
@@ -44,15 +45,11 @@ int main( int argc, char **argv )
         }
     }
 
-    for (QStringList::const_iterator numI = numList.begin(); numI != numList.end(); numI++) {
-        QtPhoneNumberString foo = *numI;
-        kDebug() << "\"" << foo.isCallableByFB7270() <<"\""
-                << "    " << foo;
-
-    }
-    QtPhoneNumberString foo;
-    foo.isUnknownNumberType();
-
+//    for (QStringList::const_iterator numI = numList.begin(); numI != numList.end(); numI++) {
+//        QPhoneNumberString foo = *numI;
+//        kDebug() << "\"" << foo.isCallableByFB7270() <<"\""
+//                << "    " << foo;
+//    }
     return 0;
 }
 
