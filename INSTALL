@@ -1,7 +1,7 @@
 
 ————————— installation guide ———————————————————————————————————————————————————
 
-$ git clone gitsource kfffead
+$ git clone git://github.com/Farom/kfffeed.git
 Initialized empty Git repository in /home/blaessig/work/cpp/bar/.git/
 $ cd bar/                                   
 $ cd src/build/                         
