@@ -110,6 +110,7 @@ void FritzBoxPhoneBook::exportFile(const QString fileName) const
         return;
     const int indentSize = 4;
     QTextStream ts( &file );
+    ts.setCodec("ISO 8859-1");
     phBook.save(ts, indentSize);
     file.close();
 

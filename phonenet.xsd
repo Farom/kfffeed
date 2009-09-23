@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="Net" type="Net"/>
+
+    <xs:complexType name="Net">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Net" type="Net"/>
+        </xs:sequence>
+        <xs:attribute name="prefix" type="xs:string" use="required"/>
+        <xs:attribute name="netName" type="xs:string" use="required"/>
+        <xs:attribute name="geoDataName" type="xs:string"/>
+        <xs:attribute name="postFixBegin" type="xs:positiveInteger" use="optional"/>
+        <xs:attribute name="postFixEnd" type="xs:positiveInteger" use="optional"/>
+    </xs:complexType>
+</xs:schema>
