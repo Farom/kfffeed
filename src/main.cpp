@@ -27,35 +27,37 @@ int main( int argc, char **argv )
     // load the address book into memory
     KABC::AddressBook *addressBook = KABC::StdAddressBook::self( false );
     const KABC::Addressee::List contacts = addressBook->allAddressees();
-    phoneBook.attach(contacts);
+    //phoneBook.attach(contacts);
     //phoneBook.print();
-    phoneBook.exportFile("KAddressbook-Fritz-Box-Addressbook.xml");
-    kDebug() << "outputfile written";
+    //phoneBook.exportFile("KAddressbook-Fritz-Box-Addressbook.xml");
 
     // This is for testing of the new lib for phoneNumbers
     // i have to build a list of all numbers from my addressbook for checking
     // my regular expressions
-//    QStringList numList;
-//
-//    for ( KABC::Addressee::List::const_iterator contactI = contacts.begin();
-//          contactI != contacts.end(); contactI++) {
-//        KABC::PhoneNumber::List phoneNumbers = contactI->phoneNumbers();
-//        KABC::PhoneNumber::List::const_iterator phoneNumber = phoneNumbers.begin();
-//        for (; phoneNumber != phoneNumbers.end(); phoneNumber++) {
-//            numList.append( phoneNumber->number() );
-//        }
-//    }
+    QStringList numList;
 
-//    for (QStringList::const_iterator numI = numList.begin(); numI != numList.end(); numI++) {
-//        QPhoneNumberString foo = *numI;
-//        kDebug() << "\"" << foo.isCallableByFB7270() <<"\""
-//                << foo.countryCode()
-//                << "    " << foo;
-//    }
+    for ( KABC::Addressee::List::const_iterator contactI = contacts.begin();
+          contactI != contacts.end(); contactI++) {
+        KABC::PhoneNumber::List phoneNumbers = contactI->phoneNumbers();
+        KABC::PhoneNumber::List::const_iterator phoneNumber = phoneNumbers.begin();
+        for (; phoneNumber != phoneNumbers.end(); phoneNumber++) {
+            numList.append( phoneNumber->number() );
+        }
+    }
 
-    QPhoneNumberString number("+495313492999") ;
-    number.recognizeNumber();
-    kDebug() << number << "  " << number.prettyPrint();
+    QPhoneNumberString::staticInitialize("49","531","391");
+    kDebug() << QPhoneNumberString::m_RootElementPhoneNetXML.tagName();
+    for (QStringList::const_iterator numI = numList.begin();
+                                     numI != numList.end(); numI++)
+    {
+        QPhoneNumberString number = *numI;
+        number.recognizeNumber();
+        kDebug() << number << "  "
+                 << number.prettyPrint() << "   "
+                 << number.shortFBnumber();
+
+    }
+
     //kDebug() << number.countryCode();
     // print out the element names of all elements that are direct children
     // of the outermost element.

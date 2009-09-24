@@ -20256,5 +20256,26 @@
         <Net prefix="9977" netName="Arnschwang" geoDataName="Weiding"/>
         <Net prefix="9978" netName="Schönthal Oberpf" geoDataName="Schönthal"/>
         <Net prefix="9978" netName="Schönthal Oberpf" geoDataName="Waldmünchen, Stadt"/>
+        <Net prefix="151" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
+        <Net prefix="152" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
+        <Net prefix="1514" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
+        <Net prefix="1515" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
+        <Net prefix="160" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
+        <Net prefix="162" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
+        <Net prefix="170" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
+        <Net prefix="171" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
+        <Net prefix="172" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
+        <Net prefix="173" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
+        <Net prefix="174" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
+        <Net prefix="175" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
+        <Net prefix="179" netName="MobilfunkNetz Deutschland (ehemals O₂)"/>
+        <Net prefix="180" netName="kostenteilige Rufnummern (Ortstarif)" postFixBegin="1" postFixEnd="1" />
+        <Net prefix="180" netName="kostenteilige Rufnummern (6¢ pro Anruf)" postFixBegin="2" postFixEnd="2" />
+        <Net prefix="180" netName="kostenteilige Rufnummern (9¢ pro Minute)" postFixBegin="3" postFixEnd="3" />
+        <Net prefix="180" netName="kostenteilige Rufnummern (24¢ pro Anruf)" postFixBegin="4" postFixEnd="4" />
+        <Net prefix="180" netName="kostenteilige Rufnummern (12¢ pro Minute)" postFixBegin="5" postFixEnd="5" />
+        <Net prefix="700" netName="persönliche Rufnummern"/>
+        <Net prefix="800" netName="kostenlose Rufnummer"/>
+        <Net prefix="900" netName="Mehrwertdiensenummer max 30€ pro Einwahl, max 2€ pro Minute"/>
     </Net>
 </Net>

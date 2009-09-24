@@ -15,6 +15,10 @@ public:
         RegExp = 1,
         NetXML = 2
     };
+    enum OutputType {
+        International = 1,
+        Short = 2
+    };
 
     QPhoneNumberString();
     QPhoneNumberString(const QString & str);
@@ -26,9 +30,9 @@ public:
 
     // If you live in an city with AreaCode 543 you will not have to dial this
     // with a short number in the FritzBox you see much faster, where you dial
-    QString shortFBnumber(QString countryCode = "", // the number where you live in
-                   QString AreaCode = "",  // Number of the city you live in
-                   QString number = "") const; // the number you do not have to dial;
+    // The number is not recognized if you live in 0543, someone calls you with
+    // 123456 and 0543 123456 is saved in you FB-PhoneBook
+    QString shortFBnumber() const; // the number you do not have to dial;
 
 
     QString countryCode() const; // Ländercode
@@ -37,7 +41,11 @@ public:
     QString phoneExtensionNumber() const; // Nebenstellennummer
 
     void recognizeNumber(const RecognizeType type = NetXML);
-    QString prettyPrint();
+    QString prettyPrint(const OutputType type = International) const;
+    static bool staticInitialize(const QString localCountryCode = "",
+                                 const QString localAreaCode = "",
+                                 const QString localNumber = "");
+    static QDomElement  m_RootElementPhoneNetXML;
 private:
     bool    m_Recognized;
     QString m_CountryCode;
@@ -46,6 +54,11 @@ private:
     QString m_PhoneExtensionNumber;
 
     QString recognizeNumber(QDomElement & rootE, QString & remains);
+
+    static bool         m_StaticInitialized;
+    static QString      m_LocalCountryCode;
+    static QString      m_LocalAreaCode;
+    static QString      m_LocalNumber;
 };
 
 #endif // QTPHONENUMBERSTRING_H
