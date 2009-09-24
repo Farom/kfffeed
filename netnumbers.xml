@@ -20256,19 +20256,26 @@
         <Net prefix="9977" netName="Arnschwang" geoDataName="Weiding"/>
         <Net prefix="9978" netName="Schönthal Oberpf" geoDataName="Schönthal"/>
         <Net prefix="9978" netName="Schönthal Oberpf" geoDataName="Waldmünchen, Stadt"/>
-        <Net prefix="151" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
-        <Net prefix="152" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
-        <Net prefix="1514" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
-        <Net prefix="1515" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
-        <Net prefix="160" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
-        <Net prefix="162" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
-        <Net prefix="170" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
-        <Net prefix="171" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
-        <Net prefix="172" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
-        <Net prefix="173" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
-        <Net prefix="174" netName="MobilfunkNetz Deutschland (ehemals Vodafone, D2)"/>
-        <Net prefix="175" netName="MobilfunkNetz Deutschland (ehemals Telekom)"/>
-        <Net prefix="179" netName="MobilfunkNetz Deutschland (ehemals O₂)"/>
+        <Net prefix="151" netName="MobilfunkNetz (ehemals Telekom)"/>
+        <Net prefix="152" netName="MobilfunkNetz (ehemals Vodafone, D2)"/>
+        <Net prefix="155" netName="MobilfunkNetz (ehemals E-Plus,BASE,Simyo)"/>
+        <Net prefix="157" netName="MobilfunkNetz (ehemals E-Plus,BASE,Simyo)"/>
+        <Net prefix="159" netName="MobilfunkNetz (ehemals O₂)"/>
+        <Net prefix="160" netName="MobilfunkNetz (ehemals Telekom)"/>
+        <Net prefix="161" netName="MobilfunkNetz (ehemals E-Plus,BASE,Simyo)"/>
+        <Net prefix="162" netName="MobilfunkNetz (ehemals Vodafone, D2)"/>
+        <Net prefix="163" netName="MobilfunkNetz (ehemals E-Plus,BASE,Simyo)"/>
+        <Net prefix="164" netName="MobilfunkNetz (ehemals E-Plus,BASE,Simyo)"/>
+        <Net prefix="170" netName="MobilfunkNetz (ehemals Telekom)"/>
+        <Net prefix="171" netName="MobilfunkNetz (ehemals Telekom)"/>
+        <Net prefix="172" netName="MobilfunkNetz (ehemals Vodafone, D2)"/>
+        <Net prefix="173" netName="MobilfunkNetz (ehemals Vodafone, D2)"/>
+        <Net prefix="174" netName="MobilfunkNetz (ehemals Vodafone, D2)"/>
+        <Net prefix="175" netName="MobilfunkNetz (ehemals Telekom)"/>
+        <Net prefix="176" netName="MobilfunkNetz (ehemals O₂)"/>
+        <Net prefix="177" netName="MobilfunkNetz (ehemals E-Plus,BASE,Simyo)"/>
+        <Net prefix="178" netName="MobilfunkNetz (ehemals E-Plus,BASE,Simyo)"/>
+        <Net prefix="179" netName="MobilfunkNetz (ehemals O₂)"/>
         <Net prefix="180" netName="kostenteilige Rufnummern (Ortstarif)" postFixBegin="1" postFixEnd="1" />
         <Net prefix="180" netName="kostenteilige Rufnummern (6¢ pro Anruf)" postFixBegin="2" postFixEnd="2" />
         <Net prefix="180" netName="kostenteilige Rufnummern (9¢ pro Minute)" postFixBegin="3" postFixEnd="3" />

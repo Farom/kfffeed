@@ -71,19 +71,6 @@ QString QPhoneNumberString::shortFBnumber() const {
         }
     }
     shortNumber += phoneExtensionNumber();
-
-    //    } else {
-//        kDebug() << "AreaCode\t" << areaCode() << " "  << m_LocalAreaCode;
-//    }
-//    if ( (!diff) && ) {
-//        shortNumber += areaCode();
-//        diff = true;
-//    } else {
-//        kDebug() << "Number\t" << number() << " "  << m_LocalNumber;
-//    }
-//    if ( (!diff) && ( number() != m_LocalNumber )) {
-//        shortNumber += number();
-//    }
     return shortNumber;
 }
 
@@ -103,6 +90,7 @@ QString QPhoneNumberString::phoneExtensionNumber() const { // Nebenstellennummer
 }
 
 void QPhoneNumberString::recognizeNumber(const RecognizeType type) {
+    // @TODO partition to more than one function :-)
     if ( ! isTouchToneNumber() ) return ;
     if ( type & NetXML ) {
         if ( ! m_StaticInitialized ) staticInitialize();
@@ -114,39 +102,114 @@ void QPhoneNumberString::recognizeNumber(const RecognizeType type) {
         remains.replace(QRegExp("^\\+"),"00");
         remains.replace(QRegExp("\\D"),"");
 
-        kDebug() << "TestRemain " << remains;
+        //kDebug() << "TestRemain " << remains;
         QDomElement rootE = m_RootElementPhoneNetXML;
 
         // nur so dass, die Nummer mit einem Plus beginnt
         QString prefix = rootE.attribute("prefix");
+        bool foundPrefixInt = false;
         if ( remains.startsWith( prefix ) ) {
 //            kDebug() << "Ausgabe: " << prefix;
             remains.remove(0,prefix.length());
+            foundPrefixInt = true;
         } else {
-            if ( remains.startsWith("00") )
+            if ( remains.startsWith("00") ) {
                 remains.remove(0,QString("00").length());
-            else return;
+                foundPrefixInt = true;
+            }
         }
-        bool done =  false;
-        m_CountryCode = recognizeNumber(rootE, remains);
-        if ( m_CountryCode.isNull() ) {
-            m_Number = remains;
-            done = true;
+        bool foundPrefixCountryCode = false;
+        if (foundPrefixInt) {
+            m_CountryCode = recognizeNumber(rootE, remains);
+            if ( m_CountryCode.isNull() ) {
+                m_Number = remains;
+                kDebug() << "This countryCode was not found in XML-Database :"
+                         << *this;
+                m_AreaCode = "";
+                m_CountryCode = "";
+                m_Number = *this;
+                m_PhoneExtensionNumber = "";
+                m_Recognized = true;
+                return;
+            } else {
+                foundPrefixCountryCode = true;
+            }
+        } else {
+            m_CountryCode = m_LocalCountryCode;
+            QString fakeRemains = m_CountryCode;
+            QString check = recognizeNumber(rootE,fakeRemains);
+            //kDebug() << "Next Element :" << rootE.attribute("prefix");
+            if ( check != m_CountryCode ) {
+                kDebug() << "CountryCode not in XML-Database : "
+                         << m_LocalCountryCode;
+                m_AreaCode = "";
+                m_CountryCode = "";
+                m_Number = *this;
+                m_PhoneExtensionNumber = "";
+                m_Recognized = true;
+                return;
+            }
         }
+//        kDebug() << "Found CountryCode: " << m_CountryCode
+//                 << "    remains   " << remains;
+        bool thereHasToBeAAreaCode = false;
+        if ( remains.startsWith("0") && (! foundPrefixCountryCode) ) {
+            remains.remove(0,QString("0").length());
+            thereHasToBeAAreaCode = true;
+        }
+        if ( thereHasToBeAAreaCode || foundPrefixCountryCode )
+            m_AreaCode = recognizeNumber(rootE, remains);
+        //else kDebug() << "Strange m_AreaCode ?: " << m_AreaCode;
         // kDebug() << "Ausgabe: " << m_CountryCode;
-        m_AreaCode = recognizeNumber(rootE, remains);
-        if ( (! done) && m_CountryCode.isNull() ) {
-            m_Number = remains;
-            done = true;
+        if ( m_AreaCode.isNull() ) {
+            if ( thereHasToBeAAreaCode ) {
+                kDebug() << "The AreaCode for this number was not found"
+                         << remains << *this;
+                m_AreaCode = "";
+                m_CountryCode = "";
+                m_Number = *this;
+                m_PhoneExtensionNumber = "";
+                m_Recognized = true;
+                return;
+            } else {
+                m_AreaCode = m_LocalAreaCode;
+                QString fakeRemains = m_LocalAreaCode;
+                QString check = recognizeNumber(rootE,fakeRemains);
+                //kDebug() << "Next Element :" << rootE.attribute("prefix");
+                if (check != m_LocalAreaCode) {
+                    kDebug() << "AreaCode not found in XML-Database : "
+                             << m_LocalAreaCode;
+                    m_AreaCode = "";
+                    m_CountryCode = "";
+                    m_Number = *this;
+                    m_PhoneExtensionNumber = "";
+                    m_Recognized = true;
+                    return;
+                }
+            }
         }
+//        kDebug() << "Found AreaCode: " << m_AreaCode
+//                 << "    remains   " << remains;
         // kDebug() << "Ausgabe: " << m_AreaCode;
         m_Number = recognizeNumber(rootE, remains);
+        if ( m_Number.isNull() ) {
+            m_Number = remains;
+            m_Recognized = true;
+            return;
+        }
         // kDebug() << "Ausgabe: " << m_Numberqqq;
         m_PhoneExtensionNumber = recognizeNumber(rootE, remains);
+        // kDebug() << "Next Element :" << rootE.attribute("prefix");
         // kDebug() << "Ausgabe: " << m_PhoneExtensionNumber;
         if (m_PhoneExtensionNumber.isNull()) m_PhoneExtensionNumber = remains;
     }
     m_Recognized = true;
+/**broken:
+    kfffeed(27049) main: "1234"     "+49 123 7890"       "7890"
+    you can not know, if 4889 is meant +49 123 456-7890 or +49 123 7890
+    idea … i think there are instructions about the whole length of
+    phonenumbers: If they are too short, it is a phoneExtensionNumber
+*/
 }
 
 
@@ -176,16 +239,22 @@ QString QPhoneNumberString::prettyPrint(const OutputType type) const {
     QString niceS;
     switch (type) {
         case International:
-            niceS += "+";
-            niceS += countryCode();
-            niceS += " ";
-            niceS += areaCode();
-            niceS += " ";
+            if (! m_CountryCode.isNull()) {
+                niceS += "+";
+                niceS += countryCode();
+                niceS += " ";
+            }
+            if (! m_AreaCode.isNull()) {
+                niceS += areaCode();
+                niceS += " ";
+            }
             if ( ! number().isNull() ) {
                 niceS += number();
-                niceS += "-";
             }
-            niceS += phoneExtensionNumber();
+            if ( ! m_PhoneExtensionNumber.isNull() ) {
+                niceS += "-";
+                niceS += phoneExtensionNumber();
+            }
             break;
         case Short:
             kDebug() << "Not Yet Implemented";
