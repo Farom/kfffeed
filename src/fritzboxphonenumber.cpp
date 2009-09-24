@@ -68,7 +68,9 @@ QDomElement FritzBoxPhoneNumber::generateDomElement( QDomDocument & doc ) const 
         numberE.setAttribute("vanity", m_Vanity);
     if ( ! m_QuickDial.isEmpty() )
         numberE.setAttribute("quickdial", m_QuickDial);
-    QDomText numberText = doc.createTextNode( m_PhoneNumber );
+    QPhoneNumberString number = m_PhoneNumber;
+    number.recognizeNumber();
+    QDomText numberText = doc.createTextNode( number.shortFBnumber() );
     numberE.appendChild( numberText );
     return numberE;
 }

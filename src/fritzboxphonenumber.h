@@ -4,6 +4,7 @@
 #include <QtCore>
 #include <QtXml>
 #include <kdebug.h>
+#include "qphonenumberstring.h"
 
 /** @class FritzBoxPhoneNumber
         This class describes one PhoneNumber of the FritzBoxPhonebook
