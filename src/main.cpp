@@ -7,19 +7,57 @@
 #include "fritzboxphonebook.h"
 #include "qphonenumberstring.h"
 
+
+KCmdLineArgs * analyzeCmdLineOptions() {
+    KCmdLineOptions options;
+    options.add("cc");
+    options.add("country-code <number>",
+                ki18n("Country code for your place"),"49");
+    options.add("ac");
+    options.add("area-code <number>",
+                ki18n("Area code number for your place"));
+    options.add("pn");
+    options.add("phonebook-name <name>",ki18n("Name of you Phonebook"),"Telefonbuch");
+    options.add("o");
+    options.add("output-file <filename>",
+                ki18n("Filename where the export should be saved"),
+                "KAddressbook-Fritz-Box-Addressbook.xml");
+    options.add("nn");
+    options.add("netnumbers-file <filename>",
+                ki18n("which phonenet xml description file to use"),
+                "netnumbers.xml");
+    KCmdLineArgs::addCmdLineOptions( options );
+
+    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+
+    return args;
+}
+
 int main( int argc, char **argv )
 {
+
     KAboutData aboutData("kfffeed", "kfffeed", ki18n("kfffeed"), "0.1",
                          ki18n("Transfer Contactdate from kaddressbook to FritzBox 7270"),
                          KAboutData::License_GPL_V2);
     aboutData.addAuthor(ki18n("Björn Lässig"));
 
     KCmdLineArgs::init( argc, argv, &aboutData );
+
+
+    KCmdLineArgs *args = analyzeCmdLineOptions();
+
+    QString localInternationalCode = args->getOption("international-code");
+    QString localAreaCode = args->getOption("area-code");
+    QString phoneBookName = args->getOption("phonebook-name");
+    QString outputFileName = args->getOption("output-file");
+    QPhoneNumberString::setNetNumbersFileName( args->getOption("netnumbers-file") );
+
+
     KApplication app( false );
 
 
     // Here is a problem with the input-encoding if there are some "üöä" in it
-    FritzBoxPhoneBook phoneBook(QString("Phonebook"),"1");
+    FritzBoxPhoneBook phoneBook( phoneBookName, "1" );
 
     // this will implemented later
     // phoneBook.attach("FRITZ.Box_Telefonbuch.xml");
@@ -29,8 +67,8 @@ int main( int argc, char **argv )
     const KABC::Addressee::List contacts = addressBook->allAddressees();
     phoneBook.attach(contacts);
     //phoneBook.print();
-    QPhoneNumberString::staticInitialize("49","30","");
-    phoneBook.exportFile("KAddressbook-Fritz-Box-Addressbook.xml");
+    QPhoneNumberString::staticInitialize(localInternationalCode,localAreaCode,"");
+    phoneBook.exportFile(outputFileName);
 
     return 0;
 

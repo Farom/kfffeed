@@ -40,6 +40,9 @@ public:
     QString number() const; // Durchwahlrufnummer
     QString phoneExtensionNumber() const; // Nebenstellennummer
 
+    static void setNetNumbersFileName(const QString & filename) {
+        m_NetNumbersFileName = filename;}
+
     void recognizeNumber(const RecognizeType type = NetXML);
     QString prettyPrint(const OutputType type = International) const;
     static bool staticInitialize(const QString localCountryCode = "",
@@ -59,6 +62,7 @@ private:
     static QString      m_LocalCountryCode;
     static QString      m_LocalAreaCode;
     static QString      m_LocalNumber;
+    static QString      m_NetNumbersFileName;
 };
 
 #endif // QTPHONENUMBERSTRING_H

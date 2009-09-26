@@ -7,7 +7,7 @@ FritzBoxPhoneBookContact::FritzBoxPhoneBookContact(
         m_PersonRealName(personName)
 {
     //kDebug() << "Contact created";
-};
+}
 
 
 QDomElement

@@ -301,3 +301,5 @@ bool QPhoneNumberString::staticInitialize(
 QString QPhoneNumberString::m_LocalCountryCode;
 QString QPhoneNumberString::m_LocalAreaCode;
 QString QPhoneNumberString::m_LocalNumber;
+
+QString QPhoneNumberString::m_NetNumbersFileName;
