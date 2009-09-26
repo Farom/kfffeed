@@ -1,0 +1,8 @@
+You will get a lot of errors of type: 
+
+kfffeed(5576) QPhoneNumberString::recognizeNumber: This countryCode was not found in XML-Database : "0901232455677"
+
+It says that it did not found the netnumbers.xml.
+use parameter -nn (--netnumbers-file) see manpage for this.
+eg: 
+    kfffeed -cc 49 -ac 30 --nn /home/user/src/kfffeed/data/netnumbers.xml
