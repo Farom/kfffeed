@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Net xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="file:/home/blaessig/work/cpp/kfffead/phonenet.xsd"
+    xsi:noNamespaceSchemaLocation="http://github.com/Farom/kfffeed/raw/master/phonenet.xsd"
     prefix="+" netName="World" geoDataName="World">
     <Net prefix="49" geoDataName="Deutschland" netName="Deutsches Telefonnetz">
         <!--

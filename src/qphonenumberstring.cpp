@@ -282,13 +282,17 @@ bool QPhoneNumberString::staticInitialize(
     m_LocalAreaCode = localAreaCode;
     m_LocalNumber = localNumber;
     if ( m_StaticInitialized ) return true;
-    kDebug() << "Initialisiere NetzBaum";
+    kDebug() << "Initialize PhoneNetTree";
     QDomDocument phoneNetDoc;
-    QFile file("netnumbers.xml");
-    if (!file.open(QIODevice::ReadOnly))
+    QFile file(m_NetNumbersFileName);
+    if (!file.open(QIODevice::ReadOnly)) {
+        kDebug() << "Could not open: " << m_NetNumbersFileName;
         return false; // @TODO exceptions einbauen
+    }
     if (!phoneNetDoc.setContent(&file)) {
         file.close();
+        kDebug() << "Could not get Content of xml-file :"
+                  << m_NetNumbersFileName;
         return false; // @TODO exceptions einbauen
     }
     file.close();
