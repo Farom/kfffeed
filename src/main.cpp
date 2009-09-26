@@ -36,7 +36,7 @@ KCmdLineArgs * analyzeCmdLineOptions() {
 int main( int argc, char **argv )
 {
 
-    KAboutData aboutData("kfffeed", "kfffeed", ki18n("kfffeed"), "0.1",
+    KAboutData aboutData("kfffeed", "kfffeed", ki18n("kfffeed"), "0.2pre2",
                          ki18n("Transfer Contactdate from kaddressbook to FritzBox 7270"),
                          KAboutData::License_GPL_V2);
     aboutData.addAuthor(ki18n("Björn Lässig"));
@@ -46,17 +46,16 @@ int main( int argc, char **argv )
 
     KCmdLineArgs *args = analyzeCmdLineOptions();
 
-    QString localInternationalCode = args->getOption("international-code");
+    QString localInternationalCode = args->getOption("country-code");
     QString localAreaCode = args->getOption("area-code");
     QString phoneBookName = args->getOption("phonebook-name");
     QString outputFileName = args->getOption("output-file");
     QPhoneNumberString::setNetNumbersFileName( args->getOption("netnumbers-file") );
 
-
     KApplication app( false );
 
 
-    // Here is a problem with the input-encoding if there are some "üöä" in it
+    // Creating a phonebook
     FritzBoxPhoneBook phoneBook( phoneBookName, "1" );
 
     // this will implemented later
