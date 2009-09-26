@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+                         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+ <!-- generate man page by: 
+     xsltproc /usr/share/xml/docbook/stylesheet/nwalsh/manpages/docbook.xsl kfffeed.manpage.xml -->
+<refentry id="kfffeed" lang="en">
+    <refentryinfo>
+        <title>kfffeed</title>
+        <productname>KDE Fritz Fon Feeder</productname>
+        <releaseinfo role="version">0.2</releaseinfo>
+        <authorgroup>
+            <author>
+                <firstname>Björn</firstname>
+                <surname>Lässig</surname>
+                <contrib>Wrote all the code, available at <ulink url="http://github.com/Farom/kfffeed"/>.</contrib>
+                <affiliation>
+                    <address>
+                        <email>b.laessig@tu-bs.de</email>
+                    </address>
+                </affiliation>
+            </author>
+        </authorgroup>
+    </refentryinfo>
+
+    <refmeta>
+        <refentrytitle>kfffeed
+        </refentrytitle>
+        <manvolnum>1</manvolnum>
+    </refmeta>
+    
+    
+    <refnamediv>
+        <refname>kfffeed</refname>
+        <refpurpose>Export your KDE Addressbook for use on AVM FRITZ!Box Fon WLAN 7270</refpurpose>
+    </refnamediv>
+    
+    <refsynopsisdiv>
+        <cmdsynopsis>
+            <command>kfffeed</command>
+                <arg choice="opt"><option>-cc <replaceable>code</replaceable></option></arg>
+                <arg choice="opt"><option>-ac <replaceable>code</replaceable></option></arg>
+                <arg choice="opt"><option>-pn <replaceable>name</replaceable></option></arg>
+                <arg choice="opt"><option>-o <replaceable>file</replaceable></option></arg>
+                <arg choice="opt"> <option>-nn <replaceable>file</replaceable></option></arg>
+        </cmdsynopsis>
+        <cmdsynopsis>
+            <command>kfffeed</command>
+            <arg choice="opt">
+                <group choice="opt">
+                    <arg choice="plain"><option>-cc</option></arg>
+                    <arg choice="plain"><option>--country-code</option></arg>
+                </group>
+                <replaceable>Country Code</replaceable>
+            </arg>
+        </cmdsynopsis>
+        
+        <cmdsynopsis>
+            <command>kfffeed</command>
+            <arg choice="opt">
+                <group choice="opt">
+                    <arg choice="plain"><option>-ac</option></arg>
+                    <arg choice="plain"><option>--area-code</option></arg>
+                </group>
+                <replaceable>Area Code</replaceable>
+            </arg>
+        </cmdsynopsis>
+        <cmdsynopsis>
+            <command>kfffeed</command>
+            <arg choice="opt">
+                <group choice="opt">
+                    <arg choice="plain"><option>-pn</option></arg>
+                    <arg choice="plain"><option>--phonebook-name</option></arg>
+                </group>
+                <replaceable>name</replaceable>
+            </arg>
+        </cmdsynopsis>
+        <cmdsynopsis>
+            <command>kfffeed</command>
+            <arg choice="opt">
+                <group choice="opt">
+                    <arg choice="plain"><option>-o</option></arg>
+                    <arg choice="plain"><option>--output-file</option></arg>
+                </group>
+                <replaceable>filename</replaceable>
+            </arg>
+        </cmdsynopsis>
+        <cmdsynopsis>
+            <command>kfffeed</command>
+            <arg choice="opt">
+                <group choice="opt">
+                    <arg choice="plain"> <option>-nn</option></arg>
+                    <arg choice="plain">
+                        <option>--netnumbers-file</option>
+                    </arg>
+                </group>
+                <replaceable>filename</replaceable>
+            </arg>
+        </cmdsynopsis>
+        
+        <cmdsynopsis>
+            <command>kfffeed</command>
+            <arg choice="opt">
+                    <option>--help</option>                   
+            </arg>
+        </cmdsynopsis>
+<!--        <example>
+            <title>Dump captured events
+            </title>
+            
+        </example>
+-->        
+    </refsynopsisdiv>
+    <refsection>
+        <title>Description</title>
+        <para>
+            <command>Kfffeed</command> is a tool for exporting your contacts from Akonadi/
+            Kaddressbook/Kontact to a AVM FRITZ!Box Fon WLAN 7270.
+        </para>
+        <para>
+            The AVM FRITZ!Box Fon WLAN 7270 has a built in Dect base station. All phones registered there can have an own Phonebook.
+            <command>kfffeed</command> exports akonadi contacts to these phonebook xml file, which then can be imported by webfrontend
+            of the FritzBox.
+        </para>
+        <para><command>kfffeed</command> has to know the phonenumber of your AVM FRITZ!Box Fon WLAN 7270. If you have the international 
+            number +49 12345 6789 and have a friend with number +49 12345 5432. So you would save this number on your computer in kaddressbook.
+            When he calls you and you have the same number saved in you Fritz!Box, it gets the number 5432. So it does not recognize the caller
+            as your friend and just shows the callernumber.   
+        </para>
+        <para>If you live in a country, where you always have to dial Area Codes before the number (so local numbers can begin with a 
+            <keycap>0</keycap>) please write an email to me. At the moment Area Codes are recognized if they begin with <keycap>0</keycap>
+            and not <keycap>00</keycap>, so i would program some localization support for this.</para>
+    </refsection>
+    
+    <refsection>
+        <title>OPTIONS</title>
+        <variablelist>
+            <!-- Use the variablelist.term.separator and the
+                variablelist.term.break.after parameters to
+                control the term elements. -->
+            <varlistentry>
+                <term><option>--help</option></term>
+                <listitem>
+                    <para>Display help and exit.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term> <option>-cc</option> </term>
+                <term> <option>--country-code</option> <replaceable>Country Code</replaceable> </term>
+                <listitem>
+                    <para>
+                        Country code of the country where your Fritz!Box is standing. For Germany it is 49.
+                        In this Version only germany is supported. You just have to edit the 
+                        <filename>netname.xml</filename> to support your country. Send lists so i will generate
+                        XML-files for you.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term> <option>-ac</option> </term>
+                <term> <option>--area-code</option> <replaceable>Area Code</replaceable></term>
+                <listitem>
+                    <para>
+                        Area code of the city where your Fritz!Box is standing. For Berlin in Germany it is 30.
+                        If you find an Area Code that is not known by <productname>kfffeed</productname>, send it to me.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term> <option>-pn</option> </term>
+                <term> <option>--phonebook-name</option> <replaceable>Phonebook Name</replaceable> </term>
+                <listitem>
+                    <para>Specify the name you see on the Fritz Fon. It is the first line you see pressing dictionary
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><option>-o</option></term>
+                <term><option>--output-file <replaceable class="parameter">output-file</replaceable></option></term>
+                <listitem>
+                    <para>Specify <replaceable>output file</replaceable> to write to instead of
+                        <filename>KAddressbook-Fritz-Box-Addressbook.xml</filename></para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><option>-nn</option></term>
+                <term><option>--netnumbers-file <replaceable class="parameter">netnumbers-xml-file</replaceable></option></term>
+                <listitem>
+                    <para>Specify <replaceable>netnumbers file</replaceable> to read from instead of
+                        <filename>netnumbers.xml</filename> in local directory.</para>
+                </listitem>
+            </varlistentry>
+            
+        </variablelist>
+    </refsection>
+    
+    <refsection>
+        <title>Examples</title>
+        <example>
+            <title>Usage</title>
+            <para>./kfffeed -cc 49 -ac 30 -nn /home/user/src/kfffeed/netnumbers.xml -o export.xml</para>
+            <para>I would start this, if my fritzbox would stand in Berlin/Germany.</para>
+        </example>
+        
+    </refsection>
+    
+    
+    <refsection>
+        <title>FILES</title>
+        
+        <variablelist>
+<!--            <varlistentry>
+                <term>
+                    <filename>/etc/kfffeed.conf</filename>
+                </term>
+                <listitem>
+                    <para>The configuration file. See <citerefentry>
+                            <refentrytitle>kfffeed.conf</refentrytitle>
+                            <manvolnum>5</manvolnum>
+                        </citerefentry> for further details.</para>
+                </listitem>
+            </varlistentry>-->
+            <varlistentry>
+                <term>
+                    <filename>./kfffeed</filename>
+                </term>
+                <listitem>
+                    <para>The executable.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>
+                    <filename>netnumbers.xml</filename>
+                </term>
+                <listitem>
+                    <para>
+                        <command>kfffeed</command> uses a XML-file that describes all phonenets on earth. 
+                        Per default it has the name netnumbers.xml. It has a simple
+                        schema and ‘Yes’ it is big. It is slow too and needs lots of ram. But it knows, 
+                        where a number comes from so it is possible
+                        to print numbers pretty and some other nice features for the future. 
+                        At the moment germany is built in. If you have a list of all area
+                        codes of your country (with citynames), send it to me. Too it gives the feature 
+                        to check, whether phonenumbers are equal. Will need this for future versions.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>
+                    <filename>phonenet.xsd</filename>
+                </term>
+                <listitem>
+                    <para>
+                        <command>kfffeed</command> uses a XML-file that describes all phonenets on earth.
+                        This file is a schema that describes this file. If you want to edit netnumbers.xml you can check
+                        against this file for correct editing. For all other things, it is useless.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+
+    </refsection>
+    
+</refentry>

@@ -1,0 +1,130 @@
+'\" t
+.\"     Title: kfffeed
+        
+.\"    Author: Björn Lässig <b.laessig@tu-bs.de>
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: 09/26/2009
+.\"    Manual: kfffeed
+.\"    Source: KDE Fritz Fon Feeder 0.2
+.\"  Language: English
+.\"
+.TH "KFFFEED" "1" "09/26/2009" "KDE Fritz Fon Feeder 0.2" "kfffeed"
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kfffeed \- Export your KDE Addressbook for use on AVM FRITZ!Box Fon WLAN 7270
+.SH "SYNOPSIS"
+.HP \w'\fBkfffeed\fR\ 'u
+\fBkfffeed\fR [\fB\-cc\ \fR\fB\fIcode\fR\fR] [\fB\-ac\ \fR\fB\fIcode\fR\fR] [\fB\-pn\ \fR\fB\fIname\fR\fR] [\fB\-o\ \fR\fB\fIfile\fR\fR] [\fB\-nn\ \fR\fB\fIfile\fR\fR]
+.HP \w'\fBkfffeed\fR\ 'u
+\fBkfffeed\fR [[\fB\-cc\fR\ |\ \fB\-\-country\-code\fR]\ \fICountry\ Code\fR]
+.HP \w'\fBkfffeed\fR\ 'u
+\fBkfffeed\fR [[\fB\-ac\fR\ |\ \fB\-\-area\-code\fR]\ \fIArea\ Code\fR]
+.HP \w'\fBkfffeed\fR\ 'u
+\fBkfffeed\fR [[\fB\-pn\fR\ |\ \fB\-\-phonebook\-name\fR]\ \fIname\fR]
+.HP \w'\fBkfffeed\fR\ 'u
+\fBkfffeed\fR [[\fB\-o\fR\ |\ \fB\-\-output\-file\fR]\ \fIfilename\fR]
+.HP \w'\fBkfffeed\fR\ 'u
+\fBkfffeed\fR [[\ \fB\-nn\fR\ |\ \fB\-\-netnumbers\-file\fR\ ]\ \fIfilename\fR]
+.HP \w'\fBkfffeed\fR\ 'u
+\fBkfffeed\fR [\fB\-\-help\fR]
+.SH "DESCRIPTION"
+.PP
+
+\fBKfffeed\fR
+is a tool for exporting your contacts from Akonadi/ Kaddressbook/Kontact to a AVM FRITZ!Box Fon WLAN 7270\&.
+.PP
+The AVM FRITZ!Box Fon WLAN 7270 has a built in Dect base station\&. All phones registered there can have an own Phonebook\&.
+\fBkfffeed\fR
+exports akonadi contacts to these phonebook xml file, which then can be imported by webfrontend of the FritzBox\&.
+.PP
+\fBkfffeed\fR
+has to know the phonenumber of your AVM FRITZ!Box Fon WLAN 7270\&. If you have the international number +49 12345 6789 and have a friend with number +49 12345 5432\&. So you would save this number on your computer in kaddressbook\&. When he calls you and you have the same number saved in you Fritz!Box, it gets the number 5432\&. So it does not recognize the caller as your friend and just shows the callernumber\&.
+.PP
+If you live in a country, where you always have to dial Area Codes before the number (so local numbers can begin with a
+0) please write an email to me\&. At the moment Area Codes are recognized if they begin with
+0
+and not
+00, so i would program some localization support for this\&.
+.SH "OPTIONS"
+.PP
+\fB\-\-help\fR
+.RS 4
+Display help and exit\&.
+.RE
+.PP
+\fB\-cc\fR, \fB\-\-country\-code\fR \fICountry Code\fR
+.RS 4
+Country code of the country where your Fritz!Box is standing\&. For Germany it is 49\&. In this Version only germany is supported\&. You just have to edit the
+netname\&.xml
+to support your country\&. Send lists so i will generate XML\-files for you\&.
+.RE
+.PP
+\fB\-ac\fR, \fB\-\-area\-code\fR \fIArea Code\fR
+.RS 4
+Area code of the city where your Fritz!Box is standing\&. For Berlin in Germany it is 30\&. If you find an Area Code that is not known by
+kfffeed(TM), send it to me\&.
+.RE
+.PP
+\fB\-pn\fR, \fB\-\-phonebook\-name\fR \fIPhonebook Name\fR
+.RS 4
+Specify the name you see on the Fritz Fon\&. It is the first line you see pressing dictionary
+.RE
+.PP
+\fB\-o\fR, \fB\-\-output\-file \fR\fB\fIoutput\-file\fR\fR
+.RS 4
+Specify
+\fIoutput file\fR
+to write to instead of
+KAddressbook\-Fritz\-Box\-Addressbook\&.xml
+.RE
+.PP
+\fB\-nn\fR, \fB\-\-netnumbers\-file \fR\fB\fInetnumbers\-xml\-file\fR\fR
+.RS 4
+Specify
+\fInetnumbers file\fR
+to read from instead of
+netnumbers\&.xml
+in local directory\&.
+.RE
+.SH "EXAMPLES"
+.PP
+\fBExample\ \&1.\ \&Usage\fR
+.PP
+\&./kfffeed \-cc 49 \-ac 30 \-nn /home/user/src/kfffeed/netnumbers\&.xml \-o export\&.xml
+.PP
+I would start this, if my fritzbox would stand in Berlin/Germany\&.
+.SH "FILES"
+.PP
+\&./kfffeed
+.RS 4
+The executable\&.
+.RE
+.PP
+netnumbers\&.xml
+.RS 4
+
+\fBkfffeed\fR
+uses a XML\-file that describes all phonenets on earth\&. Per default it has the name netnumbers\&.xml\&. It has a simple schema and \(oqYes\(cq it is big\&. It is slow too and needs lots of ram\&. But it knows, where a number comes from so it is possible to print numbers pretty and some other nice features for the future\&. At the moment germany is built in\&. If you have a list of all area codes of your country (with citynames), send it to me\&. Too it gives the feature to check, whether phonenumbers are equal\&. Will need this for future versions\&.
+.RE
+.PP
+phonenet\&.xsd
+.RS 4
+
+\fBkfffeed\fR
+uses a XML\-file that describes all phonenets on earth\&. This file is a schema that describes this file\&. If you want to edit netnumbers\&.xml you can check against this file for correct editing\&. For all other things, it is useless\&.
+.RE
+.SH "AUTHOR"
+.PP
+\fBBjörn Lässig\fR <\&b\&.laessig@tu\-bs\&.de\&>
+.RS 4
+Wrote all the code, available at \m[blue]\fB\%http://github.com/Farom/kfffeed\fR\m[]\&.
+.RE
