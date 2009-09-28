@@ -3,12 +3,12 @@
         
 .\"    Author: Björn Lässig <b.laessig@tu-bs.de>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-.\"      Date: 09/26/2009
+.\"      Date: 09/29/2009
 .\"    Manual: kfffeed
 .\"    Source: KDE Fritz Fon Feeder 0.2
 .\"  Language: English
 .\"
-.TH "KFFFEED" "1" "09/26/2009" "KDE Fritz Fon Feeder 0.2" "kfffeed"
+.TH "KFFFEED" "1" "09/29/2009" "KDE Fritz Fon Feeder 0.2" "kfffeed"
 .\" -----------------------------------------------------------------
 .\" * set default formatting
 .\" -----------------------------------------------------------------
@@ -23,7 +23,7 @@
 kfffeed \- Export your KDE Addressbook for use on AVM FRITZ!Box Fon WLAN 7270
 .SH "SYNOPSIS"
 .HP \w'\fBkfffeed\fR\ 'u
-\fBkfffeed\fR [\fB\-cc\ \fR\fB\fIcode\fR\fR] [\fB\-ac\ \fR\fB\fIcode\fR\fR] [\fB\-pn\ \fR\fB\fIname\fR\fR] [\fB\-o\ \fR\fB\fIfile\fR\fR] [\fB\-nn\ \fR\fB\fIfile\fR\fR]
+\fBkfffeed\fR [\fB\-cc\ \fR\fB\fIcode\fR\fR] [\fB\-ac\ \fR\fB\fIcode\fR\fR] [\fB\-pn\ \fR\fB\fIname\fR\fR] [\fB\-o\ \fR\fB\fIfile\fR\fR] [\fB\-nn\ \fR\fB\fIfile\fR\fR] [\fB\-w\fR]
 .HP \w'\fBkfffeed\fR\ 'u
 \fBkfffeed\fR [[\fB\-cc\fR\ |\ \fB\-\-country\-code\fR]\ \fICountry\ Code\fR]
 .HP \w'\fBkfffeed\fR\ 'u
@@ -34,6 +34,8 @@ kfffeed \- Export your KDE Addressbook for use on AVM FRITZ!Box Fon WLAN 7270
 \fBkfffeed\fR [[\fB\-o\fR\ |\ \fB\-\-output\-file\fR]\ \fIfilename\fR]
 .HP \w'\fBkfffeed\fR\ 'u
 \fBkfffeed\fR [[\ \fB\-nn\fR\ |\ \fB\-\-netnumbers\-file\fR\ ]\ \fIfilename\fR]
+.HP \w'\fBkfffeed\fR\ 'u
+\fBkfffeed\fR [[\ \fB\-w\fR\ |\ \fB\-\-write\-to\-config\fR\ ]]
 .HP \w'\fBkfffeed\fR\ 'u
 \fBkfffeed\fR [\fB\-\-help\fR]
 .SH "DESCRIPTION"
@@ -95,6 +97,13 @@ to read from instead of
 netnumbers\&.xml
 in local directory\&.
 .RE
+.PP
+\fB\-w\fR, \fB\-\-write\-to\-config\fR
+.RS 4
+Setting this parameter makes
+\fBkfffeed\fR
+writing all options to a configfile\&. Usually this is $HOME/\&.kde/share/config/kfffeedrc\&. No data is exported in this case
+.RE
 .SH "EXAMPLES"
 .PP
 \fBExample\ \&1.\ \&Usage\fR
@@ -102,6 +111,12 @@ in local directory\&.
 \&./kfffeed \-cc 49 \-ac 30 \-nn /home/user/src/kfffeed/netnumbers\&.xml \-o export\&.xml
 .PP
 I would start this, if my fritzbox would stand in Berlin/Germany\&.
+.PP
+\&./kfffeed \-cc 49 \-ac 30 \-nn /home/user/src/kfffeed/netnumbers\&.xml \-o export\&.xml \-w
+.PP
+\&./kfffeed
+.PP
+This is the same above\&. First the config is written\&. Then the export is done\&.
 .SH "FILES"
 .PP
 \&./kfffeed
@@ -121,6 +136,13 @@ phonenet\&.xsd
 
 \fBkfffeed\fR
 uses a XML\-file that describes all phonenets on earth\&. This file is a schema that describes this file\&. If you want to edit netnumbers\&.xml you can check against this file for correct editing\&. For all other things, it is useless\&.
+.RE
+.PP
+$HOME/\&.kde/share/config/kfffeedrc
+.RS 4
+
+\fBkfffeed\fR
+needs some configurations, which will not change mostly\&. So you can save options to this file\&. [kfffeed] area\-code=30 country\-code=49 netnumbers\-file=/home/user/src/kfffeed/data/netnumbers\&.xml output\-file=export\&.xml phonebook\-name=Peters Telefonbuch
 .RE
 .SH "AUTHOR"
 .PP
