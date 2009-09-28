@@ -1,31 +1,31 @@
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
-
 #include <kabc/stdaddressbook.h>
-
 #include "fritzboxphonebook.h"
 #include "qphonenumberstring.h"
+#include "environment.h"
 
+Environment env;
 
 KCmdLineArgs * analyzeCmdLineOptions() {
     KCmdLineOptions options;
     options.add("cc");
     options.add("country-code <number>",
-                ki18n("Country code for your place"),"49");
+                ki18n("Country code for your place"));
     options.add("ac");
     options.add("area-code <number>",
                 ki18n("Area code number for your place"));
     options.add("pn");
-    options.add("phonebook-name <name>",ki18n("Name of you Phonebook"),"Telefonbuch");
+    options.add("phonebook-name <name>",ki18n("Name of you Phonebook"));
     options.add("o");
     options.add("output-file <filename>",
-                ki18n("Filename where the export should be saved"),
-                "KAddressbook-Fritz-Box-Addressbook.xml");
+                ki18n("Filename where the export should be saved"));
     options.add("nn");
     options.add("netnumbers-file <filename>",
-                ki18n("which phonenet xml description file to use"),
-                "netnumbers.xml");
+                ki18n("which phonenet xml description file to use"));
+    options.add("w");
+    options.add("write-to-config", ki18n("write options of commandline-configuration as defaults to configfile"));
     KCmdLineArgs::addCmdLineOptions( options );
 
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -37,26 +37,34 @@ int main( int argc, char **argv )
 {
 
     KAboutData aboutData("kfffeed", "kfffeed", ki18n("kfffeed"), "0.2pre2",
-                         ki18n("Transfer Contactdate from kaddressbook to FritzBox 7270"),
+                         ki18n("Transfer contacts from kaddressbook to FritzBox 7270 xml format"),
                          KAboutData::License_GPL_V2);
     aboutData.addAuthor(ki18n("Björn Lässig"));
-
     KCmdLineArgs::init( argc, argv, &aboutData );
-
-
     KCmdLineArgs *args = analyzeCmdLineOptions();
-
-    QString localInternationalCode = args->getOption("country-code");
-    QString localAreaCode = args->getOption("area-code");
-    QString phoneBookName = args->getOption("phonebook-name");
-    QString outputFileName = args->getOption("output-file");
-    QPhoneNumberString::setNetNumbersFileName( args->getOption("netnumbers-file") );
-
     KApplication app( false );
+    kDebug() << "  Defaults";
+    env.print();
+    env.readFromConfigFile();
+    kDebug() << "  ConfigFile";
+    env.print();
+    env.readCommandLineArgs(args);
+    kDebug() << "  CommandlineArgs";
+    env.print();
 
+    if (env.getWriteConfig()) {
+        env.writeConfig();
+        exit(0);
+    }
+
+    if ( ! env.isValid() ) {
+        kDebug() << "Environment is not valid:";
+        env.print();
+        exit(2);
+    }
 
     // Creating a phonebook
-    FritzBoxPhoneBook phoneBook( phoneBookName, "1" );
+    FritzBoxPhoneBook phoneBook( env.phoneBookName(), "1" );
 
     // this will implemented later
     // phoneBook.attach("FRITZ.Box_Telefonbuch.xml");
@@ -66,8 +74,10 @@ int main( int argc, char **argv )
     const KABC::Addressee::List contacts = addressBook->allAddressees();
     phoneBook.attach(contacts);
     //phoneBook.print();
-    QPhoneNumberString::staticInitialize(localInternationalCode,localAreaCode,"");
-    phoneBook.exportFile(outputFileName);
+    QPhoneNumberString::setNetNumbersFileName(env.netNumbersFile());
+    QPhoneNumberString::staticInitialize(env.localCountryCode(),
+                                         env.localAreaCode());
+    phoneBook.exportFile(env.outputFileName());
 
     return 0;
 

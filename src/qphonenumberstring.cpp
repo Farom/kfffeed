@@ -287,6 +287,7 @@ bool QPhoneNumberString::staticInitialize(
     QFile file(m_NetNumbersFileName);
     if (!file.open(QIODevice::ReadOnly)) {
         kDebug() << "Could not open: " << m_NetNumbersFileName;
+        exit(1);
         return false; // @TODO exceptions einbauen
     }
     if (!phoneNetDoc.setContent(&file)) {

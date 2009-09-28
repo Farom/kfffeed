@@ -33,7 +33,9 @@ set( kfffeed_SRCS main.cpp
     fritzboxphonebook.h
     fritzboxphonebook.cpp
     qphonenumberstring.h
-    qphonenumberstring.cpp)
+    qphonenumberstring.cpp
+    environment.h
+    environment.cpp)
 
 kde4_add_executable(kfffeed NOGUI ${kfffeed_SRCS})
 

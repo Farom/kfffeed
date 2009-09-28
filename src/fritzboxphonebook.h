@@ -7,6 +7,7 @@
 #include <kabc/stdaddressbook.h>
 #include "fritzboxphonebookcontact.h"
 
+
 /** @class FritzBoxPhonebook
     XML-Element <phonebook/>
 */
