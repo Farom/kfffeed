@@ -54,7 +54,6 @@ kfffeed(28130) QPhoneNumberString::recognizeNumber: This countryCode was not fou
 kfffeed(28130) QPhoneNumberString::recognizeNumber: The AreaCode for this number was not found "18500196600" "018 500 19-6600"
 kfffeed(28130) FritzBoxPhoneBook::exportFile: Wrote XML exportfile for  208  Contacts to  "export.xml"
 
-$ ls export.xml
 This file you can import to the webinterface of FritzBox 7270
     • open “http://fritz.box/” in a browser.
     • login if you have secured your box with a password
