@@ -100,12 +100,10 @@
         
         <cmdsynopsis sepchar=" ">
             <command moreinfo="none">kfffeed</command>
-            <arg choice="opt" rep="norepeat">
                 <group choice="opt" rep="norepeat">
                     <arg choice="plain" rep="norepeat"> <option>-w</option></arg>
                     <arg choice="plain" rep="norepeat"> <option>--write-to-config</option> </arg>
                 </group>
-            </arg>
         </cmdsynopsis>
         
         <cmdsynopsis sepchar=" ">
@@ -138,7 +136,7 @@
     </refsection>
     
     <refsection>
-        <title>OPTIONS</title>
+        <title>Options</title>
         <variablelist>
             
             <varlistentry>
