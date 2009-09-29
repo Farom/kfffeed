@@ -35,7 +35,6 @@ KCmdLineArgs * analyzeCmdLineOptions() {
 
 int main( int argc, char **argv )
 {
-
     KAboutData aboutData("kfffeed", "kfffeed", ki18n("kfffeed"), "0.2pre2",
                          ki18n("Transfer contacts from kaddressbook to FritzBox 7270 xml format"),
                          KAboutData::License_GPL_V2);
@@ -43,17 +42,19 @@ int main( int argc, char **argv )
     KCmdLineArgs::init( argc, argv, &aboutData );
     KCmdLineArgs *args = analyzeCmdLineOptions();
     KApplication app( false );
-    kDebug() << "  Defaults";
-    env.print();
+    KConfig config("kfffeedrc",KConfig::SimpleConfig);
+    env.setConfig( &config );
     env.readFromConfigFile();
-    kDebug() << "  ConfigFile";
-    env.print();
     env.readCommandLineArgs(args);
-    kDebug() << "  CommandlineArgs";
-    env.print();
 
     if (env.getWriteConfig()) {
         env.writeConfig();
+        env.print();
+        if (env.isValid() ) {
+            kDebug() << "Config is valid. Export could be probably created.";
+        } else {
+            kDebug() << "Config is not valid. Change config and retry.";
+        }
         exit(0);
     }
 

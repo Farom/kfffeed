@@ -24,6 +24,7 @@ public:
     void setOutputFileName(const QString outputFileName);
     bool getWriteConfig() const { return m_WriteToConfig; }
     void setWriteConfig(bool DoWriteConfig);
+    void setConfig(KConfig * config) { m_Config = config; }
 
     void readFromConfigFile();
     void readCommandLineArgs(const KCmdLineArgs * args);
@@ -38,7 +39,7 @@ private:
     QString m_NetNumbersFile;
     QString m_OutputFileName;
     bool m_WriteToConfig;
-    KConfig m_Config;
+    KConfig * m_Config;
 
 };
 

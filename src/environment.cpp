@@ -6,7 +6,7 @@ Environment::Environment():
     m_PhoneBookName("Telefonbuch"),
     m_NetNumbersFile("/src/foo/netnumbers.xml"),
     m_OutputFileName("export.xml"),
-    m_Config("kfffeedrc", KConfig::SimpleConfig)
+    m_Config(NULL)
 
 {
 }
@@ -34,11 +34,22 @@ void Environment::setWriteConfig(bool DoWriteConfig){
 
 
 void Environment::readFromConfigFile() {
-    setLocalCountryCode( m_Config.group("kfffeed").readEntry("country-code") );
-    setLocalAreaCode( m_Config.group("kfffeed").readEntry("area-code") );
-    setPhoneBookName( m_Config.group("kfffeed").readEntry("phonebook-name") );
-    setOutputFileName( m_Config.group("kfffeed").readEntry("output-file") );
-    setNetNumbersFile( m_Config.group("kfffeed").readEntry("netnumbers-file") );
+    KConfigGroup configG = m_Config->group("kfffeed");
+    QString entry =  configG.readEntry("country-code");
+    if ( ! entry.isEmpty())
+        setLocalCountryCode( entry );
+    entry =  configG.readEntry("area-code");
+    if ( ! entry.isEmpty())
+        setLocalAreaCode( entry );
+    entry = configG.readEntry("phonebook-name");
+    if ( ! entry.isEmpty())
+        setPhoneBookName( entry );
+    entry = configG.readEntry("output-file");
+    if ( ! entry.isEmpty())
+        setOutputFileName( entry );
+    entry = configG.readEntry("netnumbers-file");
+    if ( ! entry.isEmpty())
+        setNetNumbersFile( entry );
 }
 
 void Environment::readCommandLineArgs(const KCmdLineArgs * args) {
@@ -57,13 +68,18 @@ void Environment::readCommandLineArgs(const KCmdLineArgs * args) {
 }
 
 void Environment::writeConfig() {
-    KConfigGroup confGroup = m_Config.group("kfffeed");
-    confGroup.writeEntry("output-file",m_OutputFileName);
-    confGroup.writeEntry("netnumbers-file",m_NetNumbersFile);
-    confGroup.writeEntry("area-code",m_LocalAreaCode);
-    confGroup.writeEntry("country-code",m_LocalCountryCode);
+    KConfigGroup confGroup = m_Config->group("kfffeed");
+    if ( ! m_OutputFileName.isEmpty() )
+        confGroup.writeEntry("output-file",m_OutputFileName);
+    if ( ! m_NetNumbersFile.isEmpty() )
+        confGroup.writeEntry("netnumbers-file",m_NetNumbersFile);
+    if ( ! m_LocalAreaCode.isEmpty() )
+        confGroup.writeEntry("area-code",m_LocalAreaCode);
+    if ( ! m_LocalCountryCode.isEmpty() )
+        confGroup.writeEntry("country-code",m_LocalCountryCode);
+    if ( ! m_PhoneBookName.isEmpty() )
     confGroup.writeEntry("phonebook-name", m_PhoneBookName);
-    m_Config.sync();
+    m_Config->sync();
 }
 
 void Environment::print() {
