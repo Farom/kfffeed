@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>kfffeed</title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="en" class="refentry" title="kfffeed" lang="en"><a id="kfffeed"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>kfffeed — Export your KDE Addressbook for use on AVM FRITZ!Box Fon WLAN 7270</p></div><div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">kfffeed</code>  [<code class="option">-cc <em class="replaceable"><code>code</code></em></code>] [<code class="option">-ac <em class="replaceable"><code>code</code></em></code>] [<code class="option">-pn <em class="replaceable"><code>name</code></em></code>] [<code class="option">-o <em class="replaceable"><code>file</code></em></code>] [ <code class="option">-nn <em class="replaceable"><code>file</code></em></code>] [ <code class="option">-w</code>]</p></div><div class="cmdsynopsis"><p><code class="command">kfffeed</code>  [
+                [ <code class="option">-cc</code>  |   <code class="option">--country-code</code> ]
+                <em class="replaceable"><code>Country Code</code></em>
+            ]</p></div><div class="cmdsynopsis"><p><code class="command">kfffeed</code>  [
+                [ <code class="option">-ac</code>  |   <code class="option">--area-code</code> ]
+                <em class="replaceable"><code>Area Code</code></em>
+            ]</p></div><div class="cmdsynopsis"><p><code class="command">kfffeed</code>  [
+                [ <code class="option">-pn</code>  |   <code class="option">--phonebook-name</code> ]
+                <em class="replaceable"><code>name</code></em>
+            ]</p></div><div class="cmdsynopsis"><p><code class="command">kfffeed</code>  [
+                [ <code class="option">-o</code>  |   <code class="option">--output-file</code> ]
+                <em class="replaceable"><code>filename</code></em>
+            ]</p></div><div class="cmdsynopsis"><p><code class="command">kfffeed</code>  [
+                [  <code class="option">-nn</code>  |   
+                        <code class="option">--netnumbers-file</code>
+                     ]
+                <em class="replaceable"><code>filename</code></em>
+            ]</p></div><div class="cmdsynopsis"><p><code class="command">kfffeed</code>  [  <code class="option">-w</code>  |    <code class="option">--write-to-config</code>  ]</p></div><div class="cmdsynopsis"><p><code class="command">kfffeed</code>  [
+                    <code class="option">--help</code>                   
+            ]</p></div></div><div class="refsection" title="Description"><a id="id2846232"></a><h2>Description</h2><p>
+            <span class="command"><strong>Kfffeed</strong></span> is a tool for exporting your contacts from Akonadi/
+            Kaddressbook/Kontact to a AVM FRITZ!Box Fon WLAN 7270.
+        </p><p>
+            The AVM FRITZ!Box Fon WLAN 7270 has a built in Dect base station. All phones registered there can have an own Phonebook.
+            <span class="command"><strong>kfffeed</strong></span> exports akonadi contacts to these phonebook xml file, which then can be imported by webfrontend
+            of the FritzBox.
+        </p><p><span class="command"><strong>kfffeed</strong></span> has to know the phonenumber of your AVM FRITZ!Box Fon WLAN 7270. If you have the international 
+            number +49 12345 6789 and have a friend with number +49 12345 5432. So you would save this number on your computer in kaddressbook.
+            When he calls you and you have the same number saved in you Fritz!Box, it gets the number 5432. So it does not recognize the caller
+            as your friend and just shows the callernumber.   
+        </p><p>If you live in a country, where you always have to dial Area Codes before the number (so local numbers can begin with a 
+            <span class="keycap"><strong>0</strong></span>) please write an email to me. At the moment Area Codes are recognized if they begin with <span class="keycap"><strong>0</strong></span>
+            and not <span class="keycap"><strong>00</strong></span>, so i would program some localization support for this.</p></div><div class="refsection" title="Options"><a id="id2863514"></a><h2>Options</h2><div class="variablelist"><dl><dt><span class="term"><code class="option">--help</code></span></dt><dd><p>Display help and exit.</p></dd><dt><span class="term"> <code class="option">-cc</code> , </span><span class="term"> <code class="option">--country-code</code> <em class="replaceable"><code>Country Code</code></em> </span></dt><dd><p>
+                        Country code of the country where your Fritz!Box is standing. For Germany it is 49.
+                        In this Version only germany is supported. You just have to edit the 
+                        <code class="filename">netname.xml</code> to support your country. Send lists so i will generate
+                        XML-files for you.
+                    </p></dd><dt><span class="term"> <code class="option">-ac</code> , </span><span class="term"> <code class="option">--area-code</code> <em class="replaceable"><code>Area Code</code></em></span></dt><dd><p>
+                        Area code of the city where your Fritz!Box is standing. For Berlin in Germany it is 30.
+                        If you find an Area Code that is not known by <span class="command"><strong>kfffeed</strong></span>, send it to me.
+                    </p></dd><dt><span class="term"> <code class="option">-pn</code> , </span><span class="term"> <code class="option">--phonebook-name</code> <em class="replaceable"><code>Phonebook Name</code></em> </span></dt><dd><p>Specify the name you see on the Fritz Fon. It is the first line you see pressing dictionary
+                    </p></dd><dt><span class="term"><code class="option">-o</code>, </span><span class="term"><code class="option">--output-file <em class="replaceable"><code>output-file</code></em></code></span></dt><dd><p>Specify <em class="replaceable"><code>output file</code></em> to write to instead of
+                        <code class="filename">KAddressbook-Fritz-Box-Addressbook.xml</code></p></dd><dt><span class="term"><code class="option">-nn</code>, </span><span class="term"><code class="option">--netnumbers-file <em class="replaceable"><code>netnumbers-xml-file</code></em></code></span></dt><dd><p>Specify <em class="replaceable"><code>netnumbers file</code></em> to read from instead of
+                        <code class="filename">netnumbers.xml</code> in local directory.</p></dd><dt><span class="term"><code class="option">-w</code>, </span><span class="term"><code class="option">--write-to-config</code></span></dt><dd><p>Setting this parameter makes <span class="command"><strong>kfffeed</strong></span> writing all options to a configfile.
+                    Usually this is $HOME/.kde/share/config/kfffeedrc. No data is exported in this case.
+                    Called first time it creates the configfile with defaults overwritten by commondline.</p></dd></dl></div></div><div class="refsection" title="Examples"><a id="id2824722"></a><h2>Examples</h2><div class="example"><a id="id2825219"></a><p class="title"><b>Example 1. Fast</b></p><div class="example-contents"><pre class="programlisting">./kfffeed -cc 49 -ac 30 -nn /home/user/src/kfffeed/netnumbers.xml -o export.xml</pre><p>I would start this, if my fritzbox stands in my flat in Germany/Berlin with the phonenumber <code class="uri">+49 30 12345678</code></p></div></div><br class="example-break" /><div class="example"><a id="id2837487"></a><p class="title"><b>Example 2. Doing the same and save config</b></p><div class="example-contents"><pre class="programlisting">./kfffeed -cc 49 -ac 30 -nn /home/user/src/kfffeed/netnumbers.xml -o export.xml -w</pre><pre class="programlisting">./kfffeed</pre><p>This exports the same as above. First the config is written. Then the export is
+                done.</p></div></div><br class="example-break" /></div><div class="refsection" title="FILES"><a id="id2832222"></a><h2>FILES</h2><div class="variablelist"><dl><dt><span class="term">
+                    <code class="filename">./kfffeed</code>
+                </span></dt><dd><p>The executable.</p></dd><dt><span class="term">
+                    <code class="filename">netnumbers.xml</code>
+                </span></dt><dd><p>
+                        <span class="command"><strong>kfffeed</strong></span> uses a XML-file that describes all phonenets on earth. 
+                        Per default it has the name netnumbers.xml. It has a simple
+                        schema and ‘Yes’ it is big. It is slow too and needs lots of ram. But it knows, 
+                        where a number comes from so it is possible
+                        to print numbers pretty and some other nice features for the future. 
+                        At the moment germany is built in. If you have a list of all area
+                        codes of your country (with citynames), send it to me. Too it gives the feature 
+                        to check, whether phonenumbers are equal. Will need this for future versions.
+                    </p></dd><dt><span class="term">
+                    <code class="filename">phonenet.xsd</code>
+                </span></dt><dd><p>
+                        <span class="command"><strong>kfffeed</strong></span> uses a XML-file that describes all phonenets on earth.
+                        This file is a schema that describes this file. If you want to edit netnumbers.xml you can check
+                        against this file for correct editing. For all other things, it is useless.
+                    </p></dd><dt><span class="term">
+                    <code class="filename">$HOME/.kde/share/config/kfffeedrc</code>
+                </span></dt><dd><p>
+                        <span class="command"><strong>kfffeed</strong></span> needs some configurations, which will not change mostly. So you can save 
+                        options to this file.
+                                
+                                [kfffeed]
+                                area-code=30
+                                country-code=49
+                                netnumbers-file=/home/user/src/kfffeed/data/netnumbers.xml
+                                output-file=export.xml
+                                phonebook-name=Peters Telefonbuch
+                                
+                    </p></dd></dl></div></div><div class="refsection" title="Exit Codes"><a id="id2859161"></a><h2>Exit Codes</h2><div class="variablelist"><dl><dt><span class="term">0</span></dt><dd><p> Everything was OK</p></dd><dt><span class="term">1</span></dt><dd><p> netnumbers.xml was not found. Check config files or set -nn option.</p></dd><dt><span class="term">2</span></dt><dd><p> Environment was not set carefully </p></dd><dt><span class="term">3</span></dt><dd><p> Outputfile could not be written. </p></dd></dl></div></div></div></body></html>
