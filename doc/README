@@ -1,2 +1,25 @@
-this is a selfcreated XML Schemafile for the Phonebook Export and Import Files of the FritzBox7270.
-At the moment i use qt 4.5 so there is no schema support in qt yet, but it will be in 4.6
+This directory is for documentation and schema files.
+
+
+avm_fritzbox_addressbook_schema.xsd
+ • selfcreated XML Schemafile for the Phonebook Export and Import Files of the
+   FritzBox7270.  At the moment i use qt 4.5 so there is no schema support in qt
+   yet, but it will be in 4.6
+
+kfffeed.manpage.xml
+ • docbooc file for generating manpage
+
+tikfffeed.1
+ • manpage 
+ • created by: xsltproc docbook.xsl kfffeed.manpage.xml
+
+kfffeed.man.xhtml
+ • manpage as xhtml
+ • created from kfffeed.manpage.xml
+
+phonenet.xsd
+ • describes how netnumbers.xml is designed
+
+testnumbers
+ • Phonenumbers for testingpurpose
+

@@ -1,3 +1,73 @@
+————————— installation guide ———————————————————————————————————————————————————
+
+$ git clone git://github.com/Farom/kfffeed.git
+Initialized empty Git repository in /home/blaessig/work/cpp/bar/.git/
+$ cd bar/                                   
+$ cd src/build/                         
+$ cmake ..                    
+-- The C compiler identification is GNU                              
+-- The CXX compiler identification is GNU                            
+-- Check for working C compiler: /usr/bin/gcc                        
+-- Check for working C compiler: /usr/bin/gcc -- works               
+[…]
+-- Found KdepimLibs: /usr/lib/cmake/KdepimLibs/KdepimLibsConfig.cmake
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/blaessig/work/cpp/bar/src/build
+$ make
+Scanning dependencies of target kfffeed_automoc
+[  0%] Built target kfffeed_automoc
+Scanning dependencies of target kfffeed
+[ 16%] Building CXX object CMakeFiles/kfffeed.dir/kfffeed_automoc.o
+[ 33%] Building CXX object CMakeFiles/kfffeed.dir/main.o
+[ 50%] Building CXX object CMakeFiles/kfffeed.dir/fritzboxphonenumber.o
+[ 66%] Building CXX object CMakeFiles/kfffeed.dir/fritzboxphonebookcontact.o
+[ 83%] Building CXX object CMakeFiles/kfffeed.dir/fritzboxphonebook.o
+/home/blaessig/work/cpp/bar/src/fritzboxphonebook.cpp:56: warning: unused parameter ‘fileName’
+[100%] Building CXX object CMakeFiles/kfffeed.dir/qphonenumberstring.o
+Linking CXX executable kfffeed
+[100%] Built target kfffeed
+
+————————— use the program ——————————————————————————————————————————————————————
+Read the manpage carefully … took a lot of time to write. All documentation but 
+manpage is old and wrong. If you do not understand something on it, my english is
+bad, send me a note.
+    
+    $ man doc/kfffeed.1
+
+Execute the program first time and write the config.
+
+    $ src/build/kfffeed -cc 49 -ac 30 -nn /home/user/src/kfffeed/data/netnumbers.xml -pn "Jons Phonebook" -o export.xml -w
+
+kfffeed(27462) Environment::print: OutputFile     :  "export.xml"
+kfffeed(27462) Environment::print: NetNumbersFile :  "/home/user/src/kfffeed/data/netnumbers.xml"
+kfffeed(27462) Environment::print: CountryCode    :  "49"
+kfffeed(27462) Environment::print: AreaCode       :  "30"
+kfffeed(27462) Environment::print: PhonebookName  :  "Jons Phonebook"
+kfffeed(27526) main: Config is valid. Export could be probably created.
+
+    $ src/build/kfffeed 
+
+kfffeed(28130) FritzBoxPhoneBook::FritzBoxPhoneBook: FBPhoneBook created
+kfffeed(28130) QPhoneNumberString::staticInitialize: Initialize PhoneNetTree
+kfffeed(28130) QPhoneNumberString::recognizeNumber: This countryCode was not found in XML-Database : "+48123456789"
+kfffeed(28130) QPhoneNumberString::recognizeNumber: The AreaCode for this number was not found "18500196600" "018 500 19-6600"
+kfffeed(28130) FritzBoxPhoneBook::exportFile: Wrote XML exportfile for  208  Contacts to  "export.xml"
+
+$ ls export.xml
+This file you can import to the webinterface of FritzBox 7270
+    • open “http://fritz.box/” in a browser.
+    • login if you have secured your box with a password
+    • klick on “Telefonbuch”
+    • klick on “Wiederherstellen”
+    • klick on “Browse” and search the file “KAddressbook-Fritz-Box-Addressbook.xml”
+    • klick on “Telefonbuch wiederherstellen”
+    • now you have all your contacts on your Dect-Phone
+
+
+
+————————————————————————————————————————————————————————————————————————————————
+Problems (vers 0.1)
 You will get a lot of errors of type: 
 
 kfffeed(5576) QPhoneNumberString::recognizeNumber: This countryCode was not found in XML-Database : "0901232455677"

@@ -61,9 +61,6 @@ void FritzBoxPhoneBook::attach(const QString fileName)
 
 void FritzBoxPhoneBook::exportFile(const QString fileName) const
 {
-    kDebug() << "Create XML exportfile for "
-             << m_Contacts.size()
-             << " Contacts";
     void deleteContactsWithoutNumbers();
     /****************************************************/
     /************ initialize the xml-dom tree ***********/
@@ -105,14 +102,21 @@ void FritzBoxPhoneBook::exportFile(const QString fileName) const
     /************ Writing the dom tree to a file ********/
     /****************************************************/
     QFile file( fileName );
-    if ( !file.open( QIODevice::WriteOnly ) )
+    if ( !file.open( QIODevice::WriteOnly ) ) {
         /** @TODO exceptions verbauen */
-        return;
+        kDebug() << " could not write to file: "
+                 << fileName;
+        exit(3);
+    }
     const int indentSize = 4;
     QTextStream ts( &file );
     ts.setCodec("ISO 8859-1");
     phBook.save(ts, indentSize);
     file.close();
+    kDebug() << "Wrote XML exportfile for "
+             << m_Contacts.size()
+             << " Contacts to "
+             << fileName;
 
 }
 

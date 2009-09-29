@@ -310,6 +310,12 @@
                     <para> Environment was not set carefully </para>
                 </listitem>
             </varlistentry>
+            <varlistentry>
+                <term>3</term>
+                <listitem>
+                    <para> Outputfile could not be written. </para>
+                </listitem>
+            </varlistentry>
         </variablelist>
         
     </refsection>
