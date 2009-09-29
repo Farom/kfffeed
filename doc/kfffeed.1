@@ -73,7 +73,7 @@ to support your country\&. Send lists so i will generate XML\-files for you\&.
 \fB\-ac\fR, \fB\-\-area\-code\fR \fIArea Code\fR
 .RS 4
 Area code of the city where your Fritz!Box is standing\&. For Berlin in Germany it is 30\&. If you find an Area Code that is not known by
-kfffeed(TM), send it to me\&.
+\fBkfffeed\fR, send it to me\&.
 .RE
 .PP
 \fB\-pn\fR, \fB\-\-phonebook\-name\fR \fIPhonebook Name\fR
@@ -102,21 +102,48 @@ in local directory\&.
 .RS 4
 Setting this parameter makes
 \fBkfffeed\fR
-writing all options to a configfile\&. Usually this is $HOME/\&.kde/share/config/kfffeedrc\&. No data is exported in this case
+writing all options to a configfile\&. Usually this is $HOME/\&.kde/share/config/kfffeedrc\&. No data is exported in this case\&. Called first time it creates the configfile with defaults overwritten by commondline\&.
 .RE
 .SH "EXAMPLES"
 .PP
-\fBExample\ \&1.\ \&Usage\fR
-.PP
+\fBExample\ \&1.\ \&Fast\fR
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
 \&./kfffeed \-cc 49 \-ac 30 \-nn /home/user/src/kfffeed/netnumbers\&.xml \-o export\&.xml
+.fi
+.if n \{\
+.RE
+.\}
 .PP
-I would start this, if my fritzbox would stand in Berlin/Germany\&.
+I would start this, if my fritzbox stands in my flat in Germany/Berlin with the phonenumber
++49 30 12345678
 .PP
+\fBExample\ \&2.\ \&Doing the same and save config\fR
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
 \&./kfffeed \-cc 49 \-ac 30 \-nn /home/user/src/kfffeed/netnumbers\&.xml \-o export\&.xml \-w
-.PP
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
 \&./kfffeed
+.fi
+.if n \{\
+.RE
+.\}
 .PP
-This is the same above\&. First the config is written\&. Then the export is done\&.
+This exports the same as above\&. First the config is written\&. Then the export is done\&.
 .SH "FILES"
 .PP
 \&./kfffeed
@@ -143,6 +170,22 @@ $HOME/\&.kde/share/config/kfffeedrc
 
 \fBkfffeed\fR
 needs some configurations, which will not change mostly\&. So you can save options to this file\&. [kfffeed] area\-code=30 country\-code=49 netnumbers\-file=/home/user/src/kfffeed/data/netnumbers\&.xml output\-file=export\&.xml phonebook\-name=Peters Telefonbuch
+.RE
+.SH "EXIT CODES"
+.PP
+0
+.RS 4
+Everything was OK
+.RE
+.PP
+1
+.RS 4
+netnumbers\&.xml was not found\&. Check config files or set \-nn option\&.
+.RE
+.PP
+2
+.RS 4
+Environment was not set carefully
 .RE
 .SH "AUTHOR"
 .PP

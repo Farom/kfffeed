@@ -165,7 +165,7 @@
                 <listitem>
                     <para>
                         Area code of the city where your Fritz!Box is standing. For Berlin in Germany it is 30.
-                        If you find an Area Code that is not known by <productname class="trade">kfffeed</productname>, send it to me.
+                        If you find an Area Code that is not known by <command>kfffeed</command>, send it to me.
                     </para>
                 </listitem>
             </varlistentry>
@@ -198,7 +198,8 @@
                 <term><option>--write-to-config</option></term>
                 <listitem>
                     <para>Setting this parameter makes <command moreinfo="none">kfffeed</command> writing all options to a configfile.
-                    Usually this is $HOME/.kde/share/config/kfffeedrc. No data is exported in this case</para>
+                    Usually this is $HOME/.kde/share/config/kfffeedrc. No data is exported in this case.
+                    Called first time it creates the configfile with defaults overwritten by commondline.</para>
                 </listitem>
             </varlistentry>
             
@@ -208,12 +209,16 @@
     <refsection>
         <title>Examples</title>
         <example>
-            <title>Usage</title>
-            <para>./kfffeed -cc 49 -ac 30 -nn /home/user/src/kfffeed/netnumbers.xml -o export.xml</para>
-            <para>I would start this, if my fritzbox would stand in Berlin/Germany.</para>
-            <para>./kfffeed -cc 49 -ac 30 -nn /home/user/src/kfffeed/netnumbers.xml -o export.xml -w</para>
-            <para>./kfffeed</para>
-            <para>This is the same above. First the config is written. Then the export is done.</para>
+            <title>Fast</title>
+            <programlisting>./kfffeed -cc 49 -ac 30 -nn /home/user/src/kfffeed/netnumbers.xml -o export.xml</programlisting>
+            <para>I would start this, if my fritzbox stands in my flat in Germany/Berlin with the phonenumber <uri>+49 30 12345678</uri></para>
+        </example>
+        <example>
+            <title>Doing the same and save config</title>
+            <programlisting>./kfffeed -cc 49 -ac 30 -nn /home/user/src/kfffeed/netnumbers.xml -o export.xml -w</programlisting>
+            <programlisting>./kfffeed</programlisting>
+            <para>This exports the same as above. First the config is written. Then the export is
+                done.</para>
         </example>
         
     </refsection>
@@ -269,21 +274,45 @@
                     <para>
                         <command>kfffeed</command> needs some configurations, which will not change mostly. So you can save 
                         options to this file.
-                            
-                            &lsqb;kfffeed&rsqb;
-                            area-code=30
-                            country-code=49
-                            netnumbers-file=/home/user/src/kfffeed/data/netnumbers.xml
-                            output-file=export.xml
-                            phonebook-name=Peters Telefonbuch
-                        
-                        
-                        
+                                <![CDATA[
+                                [kfffeed]
+                                area-code=30
+                                country-code=49
+                                netnumbers-file=/home/user/src/kfffeed/data/netnumbers.xml
+                                output-file=export.xml
+                                phonebook-name=Peters Telefonbuch
+                                ]]>
                     </para>
                 </listitem>
             </varlistentry>
         </variablelist>
 
     </refsection>
+    <refsection>
+        <title>Exit Codes</title>
+        <variablelist>
+            <varlistentry>
+                <term>0</term>
+                <listitem>
+                    <para> Everything was OK</para>
+                </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+                <term>1</term>
+                <listitem>
+                    <para> netnumbers.xml was not found. Check config files or set -nn option.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>2</term>
+                <listitem>
+                    <para> Environment was not set carefully </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        
+    </refsection>
+    
     
 </refentry>
