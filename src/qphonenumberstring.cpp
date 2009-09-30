@@ -10,6 +10,19 @@ QPhoneNumberString::QPhoneNumberString(const QString & str):
     QString(str)
 {}
 
+bool QPhoneNumberString::operator==(const QPhoneNumberString & other) const {
+    if ( other == *this ) return true;
+    if ( this->countryCode() != other.countryCode() ) return false;
+    if ( this->areaCode() != other.areaCode() ) return false;
+    if ( this->number() != other.number() ) return false;
+    if ( this->phoneExtensionNumber() != other.phoneExtensionNumber() ) return false;
+    return true;
+}
+
+bool QPhoneNumberString::operator!=(const QPhoneNumberString & other) const {
+    return ! ( *this == other );
+}
+
 
 bool QPhoneNumberString::isCallableByFB7270() const {
     QRegExp regexp("^\\d+$");

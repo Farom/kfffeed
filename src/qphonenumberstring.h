@@ -23,6 +23,9 @@ public:
     QPhoneNumberString();
     QPhoneNumberString(const QString & str);
 
+    bool operator==(const QPhoneNumberString & that) const;
+    bool operator!=(const QPhoneNumberString & that) const;
+
     bool isUnknownNumberType() const;
     bool isCallableByFB7270() const;
     bool isSipNumber() const;
