@@ -6,6 +6,17 @@
 #include <kdebug.h>
 #include "qphonenumberstring.h"
 
+namespace FritzBoxNumber {
+    enum ErrorValidType {
+        NoError = 0,
+        VanityNumberIsMissing = 1,
+        VanityNumberIsWrong = 2,
+        QuickDialNumberIsMissing = 4,
+        QuickDialNumberIsWrong = 8
+    };
+}
+
+
 /** @class FritzBoxPhoneNumber
         This class describes one PhoneNumber of the FritzBoxPhonebook
         is everything in the XML-Element <number/>
@@ -41,7 +52,7 @@ public:
     NumberTypeType type() const { return m_Type; }
     void setType(const NumberTypeType & type) { m_Type = type; }
 
-    bool isValid() const;
+    int isValid() const;
     // Wenn m_Phonenumber contains "@", quickdial and vanity required
     QDomElement generateDomElement(QDomDocument & doc) const;
 

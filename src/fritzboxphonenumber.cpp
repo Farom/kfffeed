@@ -19,36 +19,40 @@ FritzBoxPhoneNumber::FritzBoxPhoneNumber(
     //kDebug() << "A PhoneNumber is created";
 }
 
-bool FritzBoxPhoneNumber::isValid() const
+int FritzBoxPhoneNumber::isValid() const
 {
+    using namespace FritzBoxNumber;
+    int errorCode = NoError;
+    QPhoneNumberString number = m_PhoneNumber;
+    if ( number.isSipNumber() ) {
+        if ( m_Vanity.isEmpty() || m_QuickDial.isEmpty() ) {
+            kDebug() << "Sipnumber does not have a quickdial and vanity number";
+        }
+        if ( m_Vanity.isEmpty() )
+            errorCode = VanityNumberIsMissing | errorCode;
+        if ( m_QuickDial.isEmpty() ) errorCode |= QuickDialNumberIsMissing;
+    }
     // vanity and quickdial contains only of numbers
-//    if ( isNumberOrNull( m_Vanity ) ) {
-//        kDebug() << " Vanity (" << m_Vanity
-//                 << ") Number of " << m_PhoneNumber
-//                 <<" is not a Number ";
-//        return false;
-//    }
-//
-//    if ( isNumber( m_QuickDial ) ) {
-//        kDebug() << " QuickDial Number (" << m_QuickDial
-//                 <<") of " << m_PhoneNumber
-//                 <<" is not a Number ";
-//        return false;
-//    }
-//
-//    // Wenn m_Phonenumber contains "@", quickdial and vanity required
-//    if ( m_PhoneNumber.contains("@") ) {
-//        kDebug() << "Phonenumber with an @ (" << m_PhoneNumber
-//                 << ") must have a quickdial and a vanitynumber";
-//        return false;
-//    }
+    if ( ! isNumberOrNull( m_Vanity ) ) {
+        errorCode |= VanityNumberIsWrong;
+        kDebug() << " Vanity (" << m_Vanity
+                 << ") Number of " << m_PhoneNumber
+                 <<" is not a Number ";
+    }
 
-    return true;
+    if ( ! isNumberOrNull( m_QuickDial ) ) {
+        errorCode |= QuickDialNumberIsWrong;
+        kDebug() << " QuickDial Number (" << m_QuickDial
+                 <<") of " << m_PhoneNumber
+                 <<" is not a Number ";
+    }
+    if (errorCode) kDebug() << "Errorcode : " << errorCode;
+    return errorCode;
 }
 
 bool FritzBoxPhoneNumber::isNumber(const QString string) const
 {
-    const static QRegExp rx("^\\+?[\\d\\s]+$");
+    const static QRegExp rx("^\\d+$");
     return rx.exactMatch(string);
 }
 
@@ -59,8 +63,7 @@ bool FritzBoxPhoneNumber::isNumberOrNull(const QString string) const
 }
 
 QDomElement FritzBoxPhoneNumber::generateDomElement( QDomDocument & doc ) const {
-    QDomElement foo;
-    if ( ! isValid() ) return foo;
+    if ( ! isValid() ) return QDomElement();
     QDomElement numberE = doc.createElement("number");
     numberE.setAttribute("prio", this->m_Priority);
     numberE.setAttribute("type", this->typeString());

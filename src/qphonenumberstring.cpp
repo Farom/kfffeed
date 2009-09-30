@@ -17,7 +17,9 @@ bool QPhoneNumberString::isCallableByFB7270() const {
 }
 
 bool QPhoneNumberString::isSipNumber() const {
-    QRegExp regexp("\\@");
+    QRegExp regexp("sip:.*@((\\w([\\w-]*\\w)?\\.)*)+",Qt::CaseInsensitive);
+    //QRegExp regexp2("sip:.*@(([a-z0-9]([a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?|\\[((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:([\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
+    //                 Qt::CaseInsensitive);
     return this->contains(regexp);
 }
 bool QPhoneNumberString::isTouchToneNumber() const {
@@ -237,7 +239,8 @@ QString QPhoneNumberString::recognizeNumber(QDomElement & rootE,
 
 QString QPhoneNumberString::prettyPrint(const OutputType type) const {
     QString niceS;
-    switch (type) {
+    if (isTouchToneNumber()) {
+        switch (type) {
         case International:
             if (! m_CountryCode.isNull()) {
                 niceS += "+";
@@ -265,6 +268,9 @@ QString QPhoneNumberString::prettyPrint(const OutputType type) const {
             niceS = "";
             break;
 
+        }
+    } else {
+        if (isSipNumber()) niceS = *this;
     }
     return niceS;
 

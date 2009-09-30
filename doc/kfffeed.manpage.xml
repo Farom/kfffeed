@@ -313,7 +313,7 @@
                 <listitem>
                     <para> Outputfile could not be written. </para>
                 </listitem>
-            </varlistentry>
+            </varlistentry>            
         </variablelist>
         
     </refsection>

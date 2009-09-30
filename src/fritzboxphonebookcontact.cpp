@@ -12,8 +12,7 @@ FritzBoxPhoneBookContact::FritzBoxPhoneBookContact(
 
 QDomElement
 FritzBoxPhoneBookContact::generateDomElement(
-        QDomDocument & doc)
-const  {
+        QDomDocument & doc) const {
     // @TODO Number-Type = Fax ... ignore Number.
     // it is not useful having a FaxNumber on a Dect Fon.
     if ( ! hasNumbers() ) return QDomElement();
