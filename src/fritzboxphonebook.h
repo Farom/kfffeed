@@ -28,7 +28,7 @@ public:
 
     void attach(const KABC::Addressee::List contactList);
     void attach(const QString fileName);
-    void exportFile(const QString fileName) const;
+    void exportFile(const QString fileName);
     void deleteContactsWithoutNumbers() {
         m_Contacts.deleteContactsWithoutNumbers(); }
 

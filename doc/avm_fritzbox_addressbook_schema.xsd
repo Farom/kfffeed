@@ -69,7 +69,12 @@
                 <xs:element ref="realName"/>
                 <xs:element minOccurs="0" name="ImageUrl" type="xs:token">
                     <xs:annotation>
-                        <xs:documentation xml:lang="de">Ich weiß noch nicht wozu das gut ist. Ich werde wohl mal in das Windowsprogramm zur FritzBox schauen müssen. Es tauch auch sehr selten auf. Trage ich eine Url ein, passiert nicht wirklich etwas.</xs:documentation>
+                        <xs:documentation xml:lang="de">Ich weiß noch nicht wozu das gut ist. Ich
+                            werde wohl mal in das Windowsprogramm zur FritzBox schauen müssen. Es
+                            tauch auch sehr selten auf. Trage ich eine Url ein, passiert nicht
+                            wirklich etwas. Das FritzFon MT-F hat einen Farbdisplay und kann wohl
+                            Bilder anzeigen, so ist es zumindest auf den Prospekten
+                            dargestellt</xs:documentation>
                     </xs:annotation>
                 </xs:element>
             </xs:sequence>

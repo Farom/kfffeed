@@ -12,9 +12,9 @@ FritzBoxPhoneBookContact::FritzBoxPhoneBookContact(
 
 QDomElement
 FritzBoxPhoneBookContact::generateDomElement(
-        QDomDocument & doc) const {
-    // @TODO Number-Type = Fax ... ignore Number.
-    // it is not useful having a FaxNumber on a Dect Fon.
+        QDomDocument & doc) const
+{
+    // if there is no phonenumber, no need to export the contact
     if ( ! hasNumbers() ) return QDomElement();
     QDomElement contactE = doc.createElement("contact");
     QDomElement categoryE = doc.createElement("category");
@@ -38,6 +38,7 @@ FritzBoxPhoneBookContact::generateDomElement(
     contactE.appendChild(telephonyE);
 
     QList<QDomNode> nodeList = m_FonNumberList.generateDomElements( doc );
+    // kDebug() << "Got NodeList with "  << nodeList.size();
     for (QList<QDomNode>::const_iterator nodeI = nodeList.begin();
                                          nodeI != nodeList.end(); nodeI++) {
         telephonyE.appendChild( *nodeI );
@@ -93,7 +94,7 @@ bool FritzBoxPhoneBookContactList::isValid() const {
     for ( const_iterator contactI = begin(); contactI != end(); contactI++ ) {
         if ( ! contactI->isValid() ) valid = false;
     }
-    // checking that the vanity and the quickdialNumber are eqal
+    // checking that the vanity and the quickdialNumber are unique
     for ( const_iterator contactI = begin(); contactI != end(); contactI++ )
     {
         /** @TODO for every number check all other numbers or make a list or something */
@@ -123,4 +124,95 @@ void FritzBoxPhoneBookContactList::deleteContactsWithoutNumbers() {
 
 }
 
+void FritzBoxPhoneBookContactList::setVanityNumbersWhereNeeded() {
+    // We have to make a list of vanityNumbers and look where we need a new one
+    QStringList vanityList;
+    typedef QPair<QString, FritzBoxPhoneNumberList::iterator> NameNumberIPair;
+    // List of "Name - Contact - Pairs" needing Vanitynumber fixed
+    QList<NameNumberIPair> numberItList;
+    for (iterator contactI = begin(); contactI != end(); contactI++) {
+        for (FritzBoxPhoneNumberList::iterator numberI = contactI->numberList().begin();
+             numberI != contactI->numberList().end(); numberI++) {
+                 QString vanityNumber = numberI->vanity();
+                 if ( ! vanityNumber.isEmpty() ) {
+                     vanityList.append(vanityNumber);
+                 }
+                 int errorCode = numberI->getErrorStatus();
+                 int matchingErrorcode;
+                 matchingErrorcode = FritzBoxNumber::VanityNumberIsWrong;
+                 matchingErrorcode |= FritzBoxNumber::VanityNumberIsMissing;
+                 if ( errorCode & matchingErrorcode ) {
+                     numberItList.append(qMakePair(contactI->personRealName(),numberI));
+                 }
+        }
+    }
+    kDebug() << "We have found "
+             << numberItList.size()
+             << " where a vanity is requiered.";
+    // A Diolog with the User is needed here
+    // until implementing this, will generate vanity from first Name
+    // Auslagern in eigene Funktion (GUI!!!)
+    for ( QList<NameNumberIPair>::iterator numberNPI=numberItList.begin();
+              numberNPI != numberItList.end(); numberNPI++)
+    {
+        QString name = numberNPI->first;
+        FritzBoxPhoneNumberList::iterator numberI = numberNPI->second;
+        if ( numberI->generateUniqueVanityNumber( name, vanityList ) )
+            vanityList.append( numberI->vanity() );
+    }
+    if ( ! numberItList.isEmpty() )
+        kDebug() << "Diese Nummern brauchen eine neue Vanitynummer";
+    // NumberNamePairIterator = numberNPI
+    for ( QList<NameNumberIPair>::iterator numberNPI=numberItList.begin();
+              numberNPI != numberItList.end(); numberNPI++)
+    {
+        kDebug() << numberNPI->first << "  "
+                 << numberNPI->second->number() << " "
+                 << numberNPI->second->vanity();
+
+    }
+
+    // for debugging purpose:
+//    if ( ! vanityList.isEmpty() ) {
+//        kDebug() << " Diese VanityNummern wurden gefunden";
+//        for ( QStringList::const_iterator numberI  = vanityList.begin();
+//                                      numberI != vanityList.end(); numberI++ )
+//        {
+//            kDebug() << *numberI;
+//        }
+//    }
+}
+
+void FritzBoxPhoneBookContactList::setQuickDialNumbersWhereNeeded() {
+    // We have to make a list of QuickDialNumbers that are already used
+    QStringList  quickDialList;
+    // List of "Name - Contact - Pairs" needing quickdialnumber fixed
+    QList<FritzBoxPhoneNumberList::iterator> numberItList;
+    for (iterator contactI = begin(); contactI != end(); contactI++) {
+        for (FritzBoxPhoneNumberList::iterator numberI = contactI->numberList().begin();
+             numberI != contactI->numberList().end(); numberI++) {
+                 QString quickDialNumber = numberI->quickDial();
+                 if ( ! quickDialNumber.isEmpty() ) {
+                     quickDialList.append(quickDialNumber);
+                 }
+                 int errorCode = numberI->getErrorStatus();
+                 int matchingErrorCode = FritzBoxNumber::QuickDialNumberIsMissing;
+                 matchingErrorCode |= FritzBoxNumber::QuickDialNumberIsWrong;
+                 if ( errorCode & matchingErrorCode ) {
+                     numberItList.append( numberI );
+                 }
+        }
+    }
+
+    // A Diolog with the User is needed here
+    // until implementing this,
+    // will generate vanity from first 5 letters of Name
+    for ( QList<FritzBoxPhoneNumberList::iterator>::iterator numberII = numberItList.begin();
+              numberII != numberItList.end(); numberII++)
+    {
+        FritzBoxPhoneNumberList::iterator numberI = *numberII;
+        if ( numberI->generateUniqueQuickDialNumber( quickDialList ) )
+            quickDialList.append( numberI->quickDial() );
+    }
+}
 

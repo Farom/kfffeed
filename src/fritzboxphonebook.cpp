@@ -59,9 +59,11 @@ void FritzBoxPhoneBook::attach(const QString fileName)
 
 }
 
-void FritzBoxPhoneBook::exportFile(const QString fileName) const
-{
-    void deleteContactsWithoutNumbers();
+void FritzBoxPhoneBook::exportFile(const QString fileName) {
+    deleteContactsWithoutNumbers();
+    m_Contacts.setVanityNumbersWhereNeeded();
+    m_Contacts.setQuickDialNumbersWhereNeeded();
+
     /****************************************************/
     /************ initialize the xml-dom tree ***********/
     /****************************************************/

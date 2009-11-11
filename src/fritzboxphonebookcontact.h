@@ -30,6 +30,7 @@ public:
     /// brief Method adds a PhonenumberObjekt to the contactlist
     /** return  gives, whether it was possible to add the number */
     bool addNumber(const FritzBoxPhoneNumber & number );
+    FritzBoxPhoneNumberList& numberList() {return m_FonNumberList; }
     void print() const;
     bool hasNumbers() const { return ! m_FonNumberList.isEmpty(); }
 
@@ -61,6 +62,8 @@ public:
     }
     void deleteContactsWithoutNumbers();
     void print() const;
+    void setVanityNumbersWhereNeeded();
+    void setQuickDialNumbersWhereNeeded();
 private:
 
 };

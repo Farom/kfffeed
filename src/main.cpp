@@ -81,25 +81,28 @@ int main( int argc, char **argv )
     phoneBook.exportFile(env.outputFileName());
 
     KABC::Addressee::List::const_iterator contactI = contacts.begin();
-    for ( ; contactI != contacts.end(); contactI++) {
-        KABC::PhoneNumber::List phoneNumbers = contactI->phoneNumbers();
-        KABC::PhoneNumber::List::const_iterator phoneNumber = phoneNumbers.begin();
-        for (; phoneNumber != phoneNumbers.end(); phoneNumber++) {
-            QPhoneNumberString number = phoneNumber->number();
-            if (number.isSipNumber()) {
-                number.recognizeNumber();
 
-                kDebug() << "Name:" << contactI->assembledName()
-                     << "    (Nummer): " << number.prettyPrint()
-                     << " Type: " << phoneNumber->typeLabel();
-            }
-        }
-    }
 
     return 0;
 
 }
 
+
+//    for ( ; contactI != contacts.end(); contactI++) {
+//        KABC::PhoneNumber::List phoneNumbers = contactI->phoneNumbers();
+//        KABC::PhoneNumber::List::const_iterator phoneNumber = phoneNumbers.begin();
+//        for (; phoneNumber != phoneNumbers.end(); phoneNumber++) {
+//            QPhoneNumberString number = phoneNumber->number();
+//            if (number.isSipNumber()) {
+//                number.recognizeNumber();
+//
+//                kDebug() << "Name:" << contactI->assembledName()
+//                     << "    (Nummer): " << number.prettyPrint()
+//                     << " Type: " << phoneNumber->typeLabel();
+//
+//            }
+//        }
+//    }
 
     // This is for testing of the new lib for phoneNumbers
     // i have to build a list of all numbers from my addressbook for checking

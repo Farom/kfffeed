@@ -327,3 +327,60 @@ QString QPhoneNumberString::m_LocalAreaCode;
 QString QPhoneNumberString::m_LocalNumber;
 
 QString QPhoneNumberString::m_NetNumbersFileName;
+
+QChar QPhoneNumberString::translatedToVanity(QChar c) {
+    Q_ASSERT( ! c.isNull());
+    if ( c.isNumber() ) return c;
+    if ( c.isSpace() ) return QChar('1');
+    if ( c.toLower() == 'a' ) return QChar('2');
+    if ( c.toLower() == 0xE4 ) return QChar('2'); // ä
+    if ( c.toLower() == 'b' ) return QChar('2');
+    if ( c.toLower() == 'c' ) return QChar('2');
+    if ( c.toLower() == 'd' ) return QChar('3');
+    if ( c.toLower() == 'e' ) return QChar('3');
+    if ( c.toLower() == 'f' ) return QChar('3');
+    if ( c.toLower() == 'g' ) return QChar('4');
+    if ( c.toLower() == 'h' ) return QChar('4');
+    if ( c.toLower() == 'i' ) return QChar('4');
+    if ( c.toLower() == 'j' ) return QChar('5');
+    if ( c.toLower() == 'k' ) return QChar('5');
+    if ( c.toLower() == 'l' ) return QChar('5');
+    if ( c.toLower() == 'm' ) return QChar('6');
+    if ( c.toLower() == 'n' ) return QChar('6');
+    if ( c.toLower() == 'o' ) return QChar('6');
+    if ( c.toLower() == 0xF6 ) return QChar('6'); // ö
+    if ( c.toLower() == 0xF8 ) return QChar('6'); // ø
+    if ( c.toLower() == 'p' ) return QChar('7');
+    if ( c.toLower() == 'q' ) return QChar('7');
+    if ( c.toLower() == 'r' ) return QChar('7');
+    if ( c.toLower() == 's' ) return QChar('7');
+    if ( c.toLower() == 0xDF ) return QChar('7'); // ß
+    if ( c.toLower() == 0x1E9E ) return QChar('7'); // ẞ
+    if ( c.toLower() == 0x17F ) return QChar('7'); // ſ
+    if ( c.toLower() == 't' ) return QChar('8');
+    if ( c.toLower() == 'u' ) return QChar('8');
+    if ( c.toLower() == 0xFC ) return QChar('8'); // ü
+    if ( c.toLower() == 'v' ) return QChar('8');
+    if ( c.toLower() == 'w' ) return QChar('9');
+    if ( c.toLower() == 'x' ) return QChar('9');
+    if ( c.toLower() == 'y' ) return QChar('9');
+    if ( c.toLower() == 'z' ) return QChar('9');
+    kDebug() << " did not found char " << c << hex << c.unicode() << "\" to translate.";
+    return( QChar() );
+}
+
+QString QPhoneNumberString::translatedToVanity(QString str) {
+    QString vanityString;
+    for  (QString::const_iterator i = str.begin(); i != str.end(); i++) {
+        vanityString.append( translatedToVanity(*i) );
+    }
+    return vanityString;
+}
+
+QString QPhoneNumberString::strippedSipNumber() const {
+    QRegExp regexp("sip:(.*@((\\w([\\w-]*\\w)?\\.)*)+\\w+)",Qt::CaseInsensitive);
+    regexp.indexIn(*this);
+    QStringList list = regexp.capturedTexts();
+    // kDebug() << "Need : " << list.at(1);
+    return list.at(1);
+}

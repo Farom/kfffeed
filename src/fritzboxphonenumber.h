@@ -6,6 +6,7 @@
 #include <kdebug.h>
 #include "qphonenumberstring.h"
 
+/** This enum has to used outside the class */
 namespace FritzBoxNumber {
     enum ErrorValidType {
         NoError = 0,
@@ -52,12 +53,20 @@ public:
     NumberTypeType type() const { return m_Type; }
     void setType(const NumberTypeType & type) { m_Type = type; }
 
-    int isValid() const;
+    int getErrorStatus() const;
+    bool isValid() const;
     // Wenn m_Phonenumber contains "@", quickdial and vanity required
     QDomElement generateDomElement(QDomDocument & doc) const;
 
     QString typeString() const;
     void print() const;
+
+    // returns whether a VanityNumber could be found
+    bool generateUniqueVanityNumber( QString fromString,
+                               const QStringList blackList );
+    bool generateUniqueQuickDialNumber( const QStringList blackList );
+
+
 private:
    bool isNumber(const QString string) const;
 
@@ -79,7 +88,7 @@ private:
         This class describes a List of FritzBoxPhoneNumbers of
         a FritzBoxPhoneBookContact is everything in the XML-Element <telefony/>
 */
-class FritzBoxPhoneNumberList : private QList<FritzBoxPhoneNumber>{
+class FritzBoxPhoneNumberList : public QList<FritzBoxPhoneNumber>{
     public:
         bool isValid() const;
         //listsize max 3

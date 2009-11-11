@@ -48,10 +48,14 @@ public:
 
     void recognizeNumber(const RecognizeType type = NetXML);
     QString prettyPrint(const OutputType type = International) const;
+    QString strippedSipNumber() const;
+
     static bool staticInitialize(const QString localCountryCode = "",
                                  const QString localAreaCode = "",
                                  const QString localNumber = "");
     static QDomElement  m_RootElementPhoneNetXML;
+    static QChar translatedToVanity(const QChar c);
+    static QString translatedToVanity(const QString str);
 private:
     bool    m_Recognized;
     QString m_CountryCode;
