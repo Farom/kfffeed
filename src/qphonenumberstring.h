@@ -53,6 +53,7 @@ public:
     static bool staticInitialize(const QString localCountryCode = "",
                                  const QString localAreaCode = "",
                                  const QString localNumber = "");
+    static void staticInitializeVanityMapping();
     static QDomElement  m_RootElementPhoneNetXML;
     static QChar translatedToVanity(const QChar c);
     static QString translatedToVanity(const QString str);
@@ -70,6 +71,10 @@ private:
     static QString      m_LocalAreaCode;
     static QString      m_LocalNumber;
     static QString      m_NetNumbersFileName;
+
+    // Map of Letters to Numbers
+    static QMap<QChar,QChar> m_VanityChars;
+
 };
 
 #endif // QTPHONENUMBERSTRING_H

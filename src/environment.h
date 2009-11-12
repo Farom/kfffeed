@@ -42,34 +42,5 @@ private:
     KConfig * m_Config;
 
 };
-/*
-QMap<QChar,int> vanityChars;
-vanityChars.insert(' ',1);
-vanityChars.insert('A',2);
-vanityChars.insert('B',2);
-vanityChars.insert('C',2);
-vanityChars.insert('D',3);
-vanityChars.insert('E',3);
-vanityChars.insert('F',3);
-vanityChars.insert('G',4);
-vanityChars.insert('H',4);
-vanityChars.insert('I',4);
-vanityChars.insert('J',5);
-vanityChars.insert('K',5);
-vanityChars.insert('L',5);
-vanityChars.insert('M',6);
-vanityChars.insert('N',6);
-vanityChars.insert('O',6);
-vanityChars.insert('P',7);
-vanityChars.insert('Q',7);
-vanityChars.insert('R',7);
-vanityChars.insert('S',7);
-vanityChars.insert('T',8);
-vanityChars.insert('U',8);
-vanityChars.insert('V',8);
-vanityChars.insert('W',9);
-vanityChars.insert('X',9);
-vanityChars.insert('Y',9);
-vanityChars.insert('Z',9);
-*/
+
 #endif // ENVIRONMENT_H

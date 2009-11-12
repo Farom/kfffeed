@@ -4,7 +4,7 @@ Environment::Environment():
     m_LocalCountryCode("49"),
     m_LocalAreaCode(),
     m_PhoneBookName("Telefonbuch"),
-    m_NetNumbersFile("/src/foo/netnumbers.xml"),
+    m_NetNumbersFile("/usr/local/share/kfffeed/netnumbers.xml"),
     m_OutputFileName("export.xml"),
     m_Config(NULL)
 

@@ -318,8 +318,46 @@ bool QPhoneNumberString::staticInitialize(
     file.close();
     // @TODO … check for the real file
     m_RootElementPhoneNetXML = phoneNetDoc.documentElement();
+    staticInitializeVanityMapping();
     m_StaticInitialized = true;
     return true;
+}
+
+void QPhoneNumberString::staticInitializeVanityMapping() {
+    m_VanityChars.insert(' ','1');
+    m_VanityChars.insert('a','2');
+    m_VanityChars.insert(0xE4,'2'); // ä
+    m_VanityChars.insert('b','2');
+    m_VanityChars.insert('c','2');
+    m_VanityChars.insert('d','3');
+    m_VanityChars.insert('e','3');
+    m_VanityChars.insert('f','3');
+    m_VanityChars.insert('g','4');
+    m_VanityChars.insert('h','4');
+    m_VanityChars.insert('i','4');
+    m_VanityChars.insert('j','5');
+    m_VanityChars.insert('k','5');
+    m_VanityChars.insert('l','5');
+    m_VanityChars.insert('m','6');
+    m_VanityChars.insert('n','6');
+    m_VanityChars.insert('o','6');
+    m_VanityChars.insert(0xF6, '6'); // ö
+    m_VanityChars.insert( 0xF8,'6'); // ø
+    m_VanityChars.insert('p','7');
+    m_VanityChars.insert('q','7');
+    m_VanityChars.insert('r','7');
+    m_VanityChars.insert('s','7');
+    m_VanityChars.insert(0xDF, '7'); // ß
+    m_VanityChars.insert(0x1E9E, '7'); // ẞ
+    m_VanityChars.insert(0x17F, '7'); // ſ
+    m_VanityChars.insert('t','8');
+    m_VanityChars.insert('u','8');
+    m_VanityChars.insert(0xFC, '8'); // ü
+    m_VanityChars.insert('v','8');
+    m_VanityChars.insert('w','9');
+    m_VanityChars.insert('x','9');
+    m_VanityChars.insert('y','9');
+    m_VanityChars.insert('z','9');
 }
 
 QString QPhoneNumberString::m_LocalCountryCode;
@@ -328,48 +366,19 @@ QString QPhoneNumberString::m_LocalNumber;
 
 QString QPhoneNumberString::m_NetNumbersFileName;
 
-QChar QPhoneNumberString::translatedToVanity(QChar c) {
-    Q_ASSERT( ! c.isNull());
+QChar QPhoneNumberString::translatedToVanity(const QChar c) {
+    if ( c.isNull() ) return QChar();
     if ( c.isNumber() ) return c;
     if ( c.isSpace() ) return QChar('1');
-    if ( c.toLower() == 'a' ) return QChar('2');
-    if ( c.toLower() == 0xE4 ) return QChar('2'); // ä
-    if ( c.toLower() == 'b' ) return QChar('2');
-    if ( c.toLower() == 'c' ) return QChar('2');
-    if ( c.toLower() == 'd' ) return QChar('3');
-    if ( c.toLower() == 'e' ) return QChar('3');
-    if ( c.toLower() == 'f' ) return QChar('3');
-    if ( c.toLower() == 'g' ) return QChar('4');
-    if ( c.toLower() == 'h' ) return QChar('4');
-    if ( c.toLower() == 'i' ) return QChar('4');
-    if ( c.toLower() == 'j' ) return QChar('5');
-    if ( c.toLower() == 'k' ) return QChar('5');
-    if ( c.toLower() == 'l' ) return QChar('5');
-    if ( c.toLower() == 'm' ) return QChar('6');
-    if ( c.toLower() == 'n' ) return QChar('6');
-    if ( c.toLower() == 'o' ) return QChar('6');
-    if ( c.toLower() == 0xF6 ) return QChar('6'); // ö
-    if ( c.toLower() == 0xF8 ) return QChar('6'); // ø
-    if ( c.toLower() == 'p' ) return QChar('7');
-    if ( c.toLower() == 'q' ) return QChar('7');
-    if ( c.toLower() == 'r' ) return QChar('7');
-    if ( c.toLower() == 's' ) return QChar('7');
-    if ( c.toLower() == 0xDF ) return QChar('7'); // ß
-    if ( c.toLower() == 0x1E9E ) return QChar('7'); // ẞ
-    if ( c.toLower() == 0x17F ) return QChar('7'); // ſ
-    if ( c.toLower() == 't' ) return QChar('8');
-    if ( c.toLower() == 'u' ) return QChar('8');
-    if ( c.toLower() == 0xFC ) return QChar('8'); // ü
-    if ( c.toLower() == 'v' ) return QChar('8');
-    if ( c.toLower() == 'w' ) return QChar('9');
-    if ( c.toLower() == 'x' ) return QChar('9');
-    if ( c.toLower() == 'y' ) return QChar('9');
-    if ( c.toLower() == 'z' ) return QChar('9');
-    kDebug() << " did not found char " << c << hex << c.unicode() << "\" to translate.";
-    return( QChar() );
+    QChar vanityChar = m_VanityChars[ c.toLower() ];
+    if ( vanityChar.isNull() )
+        kDebug() << " did not found char "
+                 << c << hex << c.unicode()
+                 << "\" to translate.";
+    return( vanityChar );
 }
 
-QString QPhoneNumberString::translatedToVanity(QString str) {
+QString QPhoneNumberString::translatedToVanity(const QString str) {
     QString vanityString;
     for  (QString::const_iterator i = str.begin(); i != str.end(); i++) {
         vanityString.append( translatedToVanity(*i) );
@@ -384,3 +393,5 @@ QString QPhoneNumberString::strippedSipNumber() const {
     // kDebug() << "Need : " << list.at(1);
     return list.at(1);
 }
+
+QMap<QChar,QChar> QPhoneNumberString::m_VanityChars;
