@@ -28,6 +28,22 @@ Scanning dependencies of target kfffeed
 Linking CXX executable kfffeed
 [100%] Built target kfffeed
 
+$ sudo make install
+[  0%] Built target kfffeed_automoc
+[100%] Built target kfffeed
+Install the project...
+-- Install configuration: "RelWithDebInfo"
+-- Installing: /usr/local/bin/kfffeed
+-- Set runtime path of "/usr/local/bin/kfffeed" to "/usr/local/lib"
+-- Installing: /usr/local/share/man/kfffeed.1
+-- Installing: /usr/local/share/kfffeed/netnumbers.xml
+
+And if you want rid of kfffeed:
+$ sudo make uninstall
+-- Uninstalling "/usr/local/bin/kfffeed"
+-- Uninstalling "/usr/local/share/man/kfffeed.1"
+-- Uninstalling "/usr/local/share/kfffeed/netnumbers.xml"
+
 ————————— use the program ——————————————————————————————————————————————————————
 Read the manpage carefully … took a lot of time to write. All documentation but 
 manpage is old and wrong. If you do not understand something on it, my english is
