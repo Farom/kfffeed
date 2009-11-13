@@ -38,7 +38,7 @@ Install the project...
 -- Installing: /usr/local/share/man/kfffeed.1
 -- Installing: /usr/local/share/kfffeed/netnumbers.xml
 
-And if you want rid of kfffeed:
+And if you want to get rid of kfffeed:
 $ sudo make uninstall
 -- Uninstalling "/usr/local/bin/kfffeed"
 -- Uninstalling "/usr/local/share/man/kfffeed.1"
