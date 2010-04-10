@@ -22,6 +22,22 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
         int count = 1; // counts the necessary doubled Names
 
         FritzBoxPhoneBookContact fbContact(contactI->formattedName().simplified());
+        // Dies wurde eingefuegt um die Namen in Werners Adressbuch zu finden :-(
+        KABC::Addressee contact = *contactI;
+        if ( contact.formattedName().simplified().isEmpty() || true) {
+            kDebug() << "Kontakt gefunden, der leer ist"
+                    << "formattedName: "  << contact.formattedName() << endl
+                    << "assembledName: "  << contact.assembledName() << endl
+                    << "additionalName" << contact.additionalName() << endl
+                    << "familyName" << contact.familyName() << endl
+                    << "formattedName" << contact.formattedName() << endl
+                    << "givenName" << contact.givenName() << endl
+                    << "name" << contact.name() << endl
+                    << "realname" << contact.realName() << endl;
+            kDebug() << "Der Grundt dafür ist völlig unklar, bitte schicken sie diese "
+                    << "Liste per email an den Entwickler (sie können sie gerne anonymisieren"
+                    << endl;
+        }
 
         KABC::PhoneNumber::List phoneNumbers = contactI->phoneNumbers();
         KABC::PhoneNumber::List::const_iterator phoneNumber = phoneNumbers.begin();
