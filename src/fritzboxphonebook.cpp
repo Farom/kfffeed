@@ -20,22 +20,23 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
         // If a Name has 3 work numbers or 5 Phones it is necessary to generate
         // 2 or more entrys of the same name eg "Björn Lässig (2)"
         int count = 1; // counts the necessary doubled Names
+        QString contactName = contactI->formattedName().simplified();
+        if ( contactName.isEmpty() ) contactName = contactI->assembledName().simplified();
+        FritzBoxPhoneBookContact fbContact( contactName );
 
-        FritzBoxPhoneBookContact fbContact(contactI->formattedName().simplified());
-        // Dies wurde eingefuegt um die Namen in Werners Adressbuch zu finden :-(
-        KABC::Addressee contact = *contactI;
-        if ( contact.formattedName().simplified().isEmpty() ) {
-            kDebug() << "Kontakt gefunden, der leer ist"
-                    << "formattedName: "  << contact.formattedName() << endl
-                    << "assembledName: "  << contact.assembledName() << endl
-                    << "additionalName" << contact.additionalName() << endl
-                    << "familyName" << contact.familyName() << endl
-                    << "formattedName" << contact.formattedName() << endl
-                    << "givenName" << contact.givenName() << endl
-                    << "name" << contact.name() << endl
-                    << "realname" << contact.realName() << endl;
-            kDebug() << "Der Grundt dafür ist völlig unklar, bitte schicken sie diese "
-                    << "Liste per email an den Entwickler (sie können sie gerne anonymisieren"
+        // This was inserted to give debug output in case of empty name
+        if ( contactName.isEmpty() ) {
+            kDebug() << "Found Contact with empty name"
+                    << "formattedName: "  << contactI->formattedName() << endl
+                    << "assembledName: "  << contactI->assembledName() << endl
+                    << "additionalName" << contactI->additionalName() << endl
+                    << "familyName" << contactI->familyName() << endl
+                    << "formattedName" << contactI->formattedName() << endl
+                    << "givenName" << contactI->givenName() << endl
+                    << "name" << contactI->name() << endl
+                    << "realname" << contactI->realName() << endl;
+            kDebug() << "Der Grund dafuer ist voellig unklar, bitte schicken sie diese "
+                    << "Liste per email an den Entwickler (sie können sie gerne anonymisieren)"
                     << endl;
         }
 
