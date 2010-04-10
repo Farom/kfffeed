@@ -24,7 +24,7 @@ void FritzBoxPhoneBook::attach(const KABC::Addressee::List contacts)
         FritzBoxPhoneBookContact fbContact(contactI->formattedName().simplified());
         // Dies wurde eingefuegt um die Namen in Werners Adressbuch zu finden :-(
         KABC::Addressee contact = *contactI;
-        if ( contact.formattedName().simplified().isEmpty() || true) {
+        if ( contact.formattedName().simplified().isEmpty() ) {
             kDebug() << "Kontakt gefunden, der leer ist"
                     << "formattedName: "  << contact.formattedName() << endl
                     << "assembledName: "  << contact.assembledName() << endl
